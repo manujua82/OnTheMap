@@ -7,17 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95939C981E5DCD46000ED571 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */; };
+		95939C991E5DCD4A000ED571 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */; };
+		95939C9A1E5DCD4D000ED571 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */; };
+		95939C9F1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95939C9E1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift */; };
 		95C2021B1E5C84680047402D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C2021A1E5C84680047402D /* AppDelegate.swift */; };
-		95C2021D1E5C84680047402D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C2021C1E5C84680047402D /* ViewController.swift */; };
+		95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C2021C1E5C84680047402D /* LoginViewController.swift */; };
 		95C202201E5C84680047402D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C2021E1E5C84680047402D /* Main.storyboard */; };
 		95C202221E5C84680047402D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95C202211E5C84680047402D /* Assets.xcassets */; };
 		95C202251E5C84680047402D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C202231E5C84680047402D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		95939C9E1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextFieldDelegate.swift; sourceTree = "<group>"; };
 		95C202171E5C84680047402D /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C2021A1E5C84680047402D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		95C2021C1E5C84680047402D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		95C2021C1E5C84680047402D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		95C2021F1E5C84680047402D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		95C202211E5C84680047402D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95C202241E5C84680047402D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -35,6 +43,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		95939C931E5DCC62000ED571 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				95939C941E5DCC70000ED571 /* fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		95939C941E5DCC70000ED571 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */,
+				95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */,
+				95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
+		95939C9B1E5DE28A000ED571 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				95939C9E1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
 		95C2020E1E5C84680047402D = {
 			isa = PBXGroup;
 			children = (
@@ -54,8 +88,10 @@
 		95C202191E5C84680047402D /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				95939C9B1E5DE28A000ED571 /* Delegates */,
+				95939C931E5DCC62000ED571 /* Resources */,
 				95C2021A1E5C84680047402D /* AppDelegate.swift */,
-				95C2021C1E5C84680047402D /* ViewController.swift */,
+				95C2021C1E5C84680047402D /* LoginViewController.swift */,
 				95C2021E1E5C84680047402D /* Main.storyboard */,
 				95C202211E5C84680047402D /* Assets.xcassets */,
 				95C202231E5C84680047402D /* LaunchScreen.storyboard */,
@@ -124,7 +160,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95939C981E5DCD46000ED571 /* Roboto-Thin.ttf in Resources */,
 				95C202251E5C84680047402D /* LaunchScreen.storyboard in Resources */,
+				95939C9A1E5DCD4D000ED571 /* Roboto-Medium.ttf in Resources */,
+				95939C991E5DCD4A000ED571 /* Roboto-Regular.ttf in Resources */,
 				95C202221E5C84680047402D /* Assets.xcassets in Resources */,
 				95C202201E5C84680047402D /* Main.storyboard in Resources */,
 			);
@@ -137,7 +176,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95C2021D1E5C84680047402D /* ViewController.swift in Sources */,
+				95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */,
+				95939C9F1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift in Sources */,
 				95C2021B1E5C84680047402D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +342,7 @@
 				95C2022B1E5C84680047402D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
