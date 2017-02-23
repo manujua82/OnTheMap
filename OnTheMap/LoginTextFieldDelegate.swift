@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class LoginTextFieldDelegate: NSObject, UITextFieldDelegate{
+
+extension LoginViewController: UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

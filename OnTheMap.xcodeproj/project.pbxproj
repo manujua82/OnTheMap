@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F52D71E5F344400847B57 /* UdacityClient.swift */; };
 		95939C981E5DCD46000ED571 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */; };
 		95939C991E5DCD4A000ED571 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */; };
 		95939C9A1E5DCD4D000ED571 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		955F52D71E5F344400847B57 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -43,6 +45,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		955F52D01E5F1CC200847B57 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				955F52D51E5F33F600847B57 /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		955F52D11E5F319500847B57 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				95C202211E5C84680047402D /* Assets.xcassets */,
+				95C202231E5C84680047402D /* LaunchScreen.storyboard */,
+				95C2021E1E5C84680047402D /* Main.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		955F52D21E5F328D00847B57 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				95939C9B1E5DE28A000ED571 /* Delegates */,
+				95C2021C1E5C84680047402D /* LoginViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		955F52D31E5F32CE00847B57 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				95C202261E5C84680047402D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		955F52D41E5F32F400847B57 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		955F52D51E5F33F600847B57 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				955F52D61E5F33FE00847B57 /* Udacity */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		955F52D61E5F33FE00847B57 /* Udacity */ = {
+			isa = PBXGroup;
+			children = (
+				955F52D71E5F344400847B57 /* UdacityClient.swift */,
+			);
+			name = Udacity;
+			sourceTree = "<group>";
+		};
 		95939C931E5DCC62000ED571 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,14 +148,13 @@
 		95C202191E5C84680047402D /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
-				95939C9B1E5DE28A000ED571 /* Delegates */,
+				955F52D41E5F32F400847B57 /* View */,
+				955F52D31E5F32CE00847B57 /* Supporting Files */,
+				955F52D21E5F328D00847B57 /* Controller */,
+				955F52D11E5F319500847B57 /* Assets */,
+				955F52D01E5F1CC200847B57 /* Model */,
 				95939C931E5DCC62000ED571 /* Resources */,
 				95C2021A1E5C84680047402D /* AppDelegate.swift */,
-				95C2021C1E5C84680047402D /* LoginViewController.swift */,
-				95C2021E1E5C84680047402D /* Main.storyboard */,
-				95C202211E5C84680047402D /* Assets.xcassets */,
-				95C202231E5C84680047402D /* LaunchScreen.storyboard */,
-				95C202261E5C84680047402D /* Info.plist */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -176,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */,
 				95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */,
 				95939C9F1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift in Sources */,
 				95C2021B1E5C84680047402D /* AppDelegate.swift in Sources */,

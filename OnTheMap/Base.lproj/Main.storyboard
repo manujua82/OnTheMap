@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -26,44 +26,44 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="weC-EE-5z9">
-                                <rect key="frame" x="32" y="40" width="310" height="284"/>
+                                <rect key="frame" x="62" y="35" width="290" height="254"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="udacity" translatesAutoresizingMaskIntoConstraints="NO" id="w0I-gI-Roh">
-                                        <rect key="frame" x="109.5" y="0.0" width="91" height="96"/>
+                                        <rect key="frame" x="99.666666666666657" y="0.0" width="91" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="91" id="nTJ-AP-S0r"/>
-                                            <constraint firstAttribute="height" constant="96" id="tI6-09-WiF"/>
+                                            <constraint firstAttribute="height" constant="86" id="tI6-09-WiF"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gZQ-DP-81F">
-                                        <rect key="frame" x="0.0" y="104" width="310" height="180"/>
+                                        <rect key="frame" x="0.0" y="94" width="290" height="160"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Udacity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4g-Xb-659">
-                                                <rect key="frame" x="0.0" y="0.0" width="310" height="29.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="25.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fQQ-4e-bwm" userLabel="Email Text Field">
-                                                <rect key="frame" x="0.0" y="37.5" width="310" height="29.5"/>
+                                                <rect key="frame" x="0.0" y="33.666666666666657" width="290" height="25.666666666666686"/>
                                                 <color key="backgroundColor" red="1" green="0.77647058823529413" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmg-F8-9v3" userLabel="Password Text Field">
-                                                <rect key="frame" x="0.0" y="75" width="310" height="30"/>
+                                                <rect key="frame" x="0.0" y="67.333333333333343" width="290" height="25.333333333333314"/>
                                                 <color key="backgroundColor" red="1" green="0.77647058823529413" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="go4-bu-lSF">
-                                                <rect key="frame" x="0.0" y="113" width="310" height="29.5"/>
+                                                <rect key="frame" x="0.0" y="100.66666666666666" width="290" height="25.666666666666686"/>
                                                 <color key="backgroundColor" red="1" green="0.40524477677566895" blue="0.071309797921813023" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <state key="normal" title="Login">
@@ -71,25 +71,25 @@
                                                 </state>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? Sing Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vz-j2-UFD">
-                                                <rect key="frame" x="0.0" y="150.5" width="310" height="29.5"/>
+                                                <rect key="frame" x="0.0" y="134.33333333333331" width="290" height="25.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="180" id="m8l-Cd-z6P"/>
-                                            <constraint firstAttribute="width" constant="310" id="tO4-yY-zc8"/>
+                                            <constraint firstAttribute="height" constant="160" id="m8l-Cd-z6P"/>
+                                            <constraint firstAttribute="width" constant="290" id="tO4-yY-zc8"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fR-6W-AyM">
-                                <rect key="frame" x="32" y="614" width="310" height="38"/>
+                                <rect key="frame" x="62" y="686" width="290" height="35"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="FhV-pU-ZKy"/>
-                                    <constraint firstAttribute="width" constant="310" id="Rwf-VA-jEt"/>
+                                    <constraint firstAttribute="height" constant="35" id="FhV-pU-ZKy"/>
+                                    <constraint firstAttribute="width" constant="290" id="Rwf-VA-jEt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                 <state key="normal" title="Loging with facebook">
@@ -101,12 +101,14 @@
                         <constraints>
                             <constraint firstItem="6fR-6W-AyM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BaC-d0-6Nw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6fR-6W-AyM" secondAttribute="bottom" constant="15" id="Q6u-Jl-Jn4"/>
-                            <constraint firstItem="weC-EE-5z9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="U6g-yn-RnX"/>
+                            <constraint firstItem="weC-EE-5z9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="15" id="U6g-yn-RnX"/>
                             <constraint firstItem="weC-EE-5z9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lyK-R4-O1t"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="fQQ-4e-bwm" id="zXT-Cf-ioK"/>
+                        <outlet property="logoImageView" destination="w0I-gI-Roh" id="n6R-28-YmJ"/>
+                        <outlet property="passwordTextField" destination="fmg-F8-9v3" id="WtN-Gf-Peg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

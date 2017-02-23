@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  OnTheMap
 //
-//  Created by Kevin Bilberry on 2/21/17.
+//  Created by Juan Salcedo on 2/21/17.
 //  Copyright © 2017 Juan Salcedo. All rights reserved.
 //
 
