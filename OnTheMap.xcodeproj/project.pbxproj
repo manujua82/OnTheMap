@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511A2A01E5F794400581CB3 /* UdacityConstants.swift */; };
 		955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F52D71E5F344400847B57 /* UdacityClient.swift */; };
 		95939C981E5DCD46000ED571 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */; };
 		95939C991E5DCD4A000ED571 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9511A2A01E5F794400581CB3 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		955F52D71E5F344400847B57 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -80,13 +82,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		955F52D41E5F32F400847B57 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		955F52D51E5F33F600847B57 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				955F52D71E5F344400847B57 /* UdacityClient.swift */,
+				9511A2A01E5F794400581CB3 /* UdacityConstants.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -148,7 +144,6 @@
 		95C202191E5C84680047402D /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
-				955F52D41E5F32F400847B57 /* View */,
 				955F52D31E5F32CE00847B57 /* Supporting Files */,
 				955F52D21E5F328D00847B57 /* Controller */,
 				955F52D11E5F319500847B57 /* Assets */,
@@ -236,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */,
+				9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */,
 				95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */,
 				95939C9F1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift in Sources */,
 				95C2021B1E5C84680047402D /* AppDelegate.swift in Sources */,

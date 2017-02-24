@@ -9,6 +9,8 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    var client = UdacityClient()
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -48,8 +50,7 @@ class LoginViewController: UIViewController {
         textField.delegate = self
     }
 
-    // MARK: Show/Hide Keyboard
-    
+    // MARK: Show/Hide Keyboa
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
@@ -81,6 +82,37 @@ class LoginViewController: UIViewController {
     func unsubscribeFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    func showAlertFaildLogin(_ message: String){
+        let alert = UIAlertController(title: "Loging Faild", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
+            //Username or Password Empty.
+            showAlertFaildLogin("Username or Password Empty.")
+
+        } else {
+            
+            let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.Udacity)\": { \"\(UdacityClient.JSONBodyKeys.Username)\": \"\(emailTextField.text!)\", \"\(UdacityClient.JSONBodyKeys.Password)\":\"\(passwordTextField.text!)\"}}"
+            
+           
+            let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
+                (result, error) in
+                if let error = error {
+                    let message = error.userInfo.description
+                    DispatchQueue.main.async {
+                        self.showAlertFaildLogin(message)
+                    }
+                }else{
+                    print("good")
+                    print("\(result)")
+                }
+            }
+        }
     }
 
 }
