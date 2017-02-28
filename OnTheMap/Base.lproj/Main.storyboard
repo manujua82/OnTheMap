@@ -103,6 +103,9 @@
                                 <state key="normal" title="Loging with facebook">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginFacebookPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cz2-62-trx"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

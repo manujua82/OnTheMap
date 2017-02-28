@@ -21,8 +21,18 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+       FacebookClient.sharedInstance().loginStart { (result, error) in
+            if let error = error{
+                print(error)
+            }else{
+                print("esta logiado con facebook:")
+                print("\(result)")
+
+            }
+        }
         configureTextField(emailTextField, nameImage: "envelope")
         configureTextField(passwordTextField, nameImage: "key")
+        
     }
     
     
@@ -116,7 +126,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func singUpPressed(_ sender: Any) {
-        
         let _ = UdacityClient.sharedInstance().udacitySingUpURL(self){ (success, error) in
             if success{
                 print("good")
@@ -126,6 +135,21 @@ class LoginViewController: UIViewController {
         }
      
     }
+
+    @IBAction func loginFacebookPressed(_ sender: Any) {
+        FacebookClient.sharedInstance().loginButtonPressed(self) { (result, error) in
+            if let error = error{
+                print(error)
+            }else{
+                print("good")
+                print("\(result)")
+            }
+
+        }
+    }
+    
+    
+   
 
 }
 

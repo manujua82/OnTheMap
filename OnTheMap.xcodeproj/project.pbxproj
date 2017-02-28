@@ -10,6 +10,7 @@
 		9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511A2A01E5F794400581CB3 /* UdacityConstants.swift */; };
 		9528604E1E64B91100BD2874 /* UdacityAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9528604D1E64B91100BD2874 /* UdacityAuthViewController.swift */; };
 		955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F52D71E5F344400847B57 /* UdacityClient.swift */; };
+		9590A5B41E660DE40020AA82 /* FacebookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9590A5B31E660DE40020AA82 /* FacebookClient.swift */; };
 		95939C981E5DCD46000ED571 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */; };
 		95939C991E5DCD4A000ED571 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */; };
 		95939C9A1E5DCD4D000ED571 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */; };
@@ -28,6 +29,7 @@
 		9511A2A01E5F794400581CB3 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		9528604D1E64B91100BD2874 /* UdacityAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityAuthViewController.swift; sourceTree = "<group>"; };
 		955F52D71E5F344400847B57 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		9590A5B31E660DE40020AA82 /* FacebookClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookClient.swift; sourceTree = "<group>"; };
 		95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		955F52D51E5F33F600847B57 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				9590A5B21E660D500020AA82 /* Facebook */,
 				955F52D61E5F33FE00847B57 /* Udacity */,
 			);
 			name = Clients;
@@ -122,6 +125,14 @@
 				9528604D1E64B91100BD2874 /* UdacityAuthViewController.swift */,
 			);
 			name = Udacity;
+			sourceTree = "<group>";
+		};
+		9590A5B21E660D500020AA82 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				9590A5B31E660DE40020AA82 /* FacebookClient.swift */,
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 		95939C931E5DCC62000ED571 /* Resources */ = {
@@ -283,7 +294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E1F8E9BB706CDB1C81BF0C32 /* [CP] Copy Pods Resources */ = {
@@ -309,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */,
+				9590A5B41E660DE40020AA82 /* FacebookClient.swift in Sources */,
 				9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */,
 				95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */,
 				95939C9F1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift in Sources */,
