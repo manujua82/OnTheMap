@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 class UdacityClient: NSObject {
@@ -59,6 +60,25 @@ class UdacityClient: NSObject {
         }
         task.resume()
         return task
+    }
+    
+    func udacitySingUpURL(_ hostViewController: UIViewController, completionHandlerForSingUp: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        
+        let singUpURL = URL(string: UdacityClient.Constants.SingUpURL)
+        let request = URLRequest(url: singUpURL!)
+        let webAuthViewController = hostViewController.storyboard?.instantiateViewController(withIdentifier: "UdacityAuthViewController") as! UdacityAuthViewController
+        
+        webAuthViewController.urlRequest = request
+        webAuthViewController.completionHandlerForView = completionHandlerForSingUp
+        
+        let webAuthNavigationController = UINavigationController()
+        webAuthNavigationController.pushViewController(webAuthViewController, animated: false)
+        
+        DispatchQueue.main.async {
+            hostViewController.present(webAuthViewController, animated: true, completion: nil)
+        }
+
+        
     }
     
     // given raw JSON, return a usable Foundation object

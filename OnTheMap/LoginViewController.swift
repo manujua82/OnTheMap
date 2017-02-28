@@ -114,6 +114,18 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func singUpPressed(_ sender: Any) {
+        
+        let _ = UdacityClient.sharedInstance().udacitySingUpURL(self){ (success, error) in
+            if success{
+                print("good")
+            }else{
+                print("error")
+            }
+        }
+     
+    }
 
 }
 

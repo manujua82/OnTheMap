@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511A2A01E5F794400581CB3 /* UdacityConstants.swift */; };
+		9528604E1E64B91100BD2874 /* UdacityAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9528604D1E64B91100BD2874 /* UdacityAuthViewController.swift */; };
 		955F52D81E5F344400847B57 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F52D71E5F344400847B57 /* UdacityClient.swift */; };
 		95939C981E5DCD46000ED571 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C971E5DCCE3000ED571 /* Roboto-Thin.ttf */; };
 		95939C991E5DCD4A000ED571 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		9511A2A01E5F794400581CB3 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		9528604D1E64B91100BD2874 /* UdacityAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityAuthViewController.swift; sourceTree = "<group>"; };
 		955F52D71E5F344400847B57 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		95939C951E5DCCE3000ED571 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		95939C961E5DCCE3000ED571 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				955F52D71E5F344400847B57 /* UdacityClient.swift */,
 				9511A2A01E5F794400581CB3 /* UdacityConstants.swift */,
+				9528604D1E64B91100BD2874 /* UdacityAuthViewController.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */,
 				95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */,
 				95939C9F1E5DE3CE000ED571 /* LoginTextFieldDelegate.swift in Sources */,
+				9528604E1E64B91100BD2874 /* UdacityAuthViewController.swift in Sources */,
 				95C2021B1E5C84680047402D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
