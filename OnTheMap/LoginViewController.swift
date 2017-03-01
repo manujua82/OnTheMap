@@ -20,16 +20,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-       FacebookClient.sharedInstance().loginStart { (result, error) in
-            if let error = error{
-                print(error)
-            }else{
-                print("esta logiado con facebook:")
-                print("\(result)")
-
-            }
-        }
         configureTextField(emailTextField, nameImage: "envelope")
         configureTextField(passwordTextField, nameImage: "key")
         
@@ -39,6 +29,22 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
+        
+        FacebookClient.sharedInstance().loginStart { (result, error) in
+            if let error = error{
+                print(error)
+            }else{
+               
+                
+                
+               /* let storyboard = UIStoryboard (name: "Main", bundle: nil)
+                let studentViewController = storyboard.instantiateViewController(withIdentifier: "StudentTableViewController")as! StudentTableViewController
+                self.present(studentViewController, animated: true, completion: nil)*/
+                
+                
+            }
+        }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {

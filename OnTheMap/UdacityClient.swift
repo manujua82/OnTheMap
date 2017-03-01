@@ -43,6 +43,7 @@ class UdacityClient: NSObject {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
                 sendError("Your request returned a status code other than 2xx!")
                 return
             }

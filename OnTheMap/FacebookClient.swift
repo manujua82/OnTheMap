@@ -13,14 +13,15 @@ import FacebookLogin
 
 class FacebookClient: NSObject {
     
-    func loginStart(completionHandlerForLogin: @escaping (_ result:[String:Any]?, _ error: Error?) -> Void){
+    func loginStart(completionHandlerForLogin: @escaping (_ authenticationToken:String?, _ error: Error?) -> Void){
         if let accessToken = AccessToken.current{
-            self.fecthProfile(completionHandlerForConvertData: completionHandlerForLogin)
+            completionHandlerForLogin(accessToken.authenticationToken, nil)
         }else{
             let userInfo = [NSLocalizedDescriptionKey : "User not login: "]
             completionHandlerForLogin(nil,NSError(domain: "loginStart", code: 1, userInfo: userInfo))
         }
     }
+
     
     func loginButtonPressed(_ hostViewController: UIViewController, completionHandlerForLogin: @escaping (_ result:[String:Any]?, _ error: Error?) -> Void){
         let loginManager = LoginManager()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="g8F-qa-wqc">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -126,6 +126,38 @@
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="37.331334332833585"/>
         </scene>
+        <!--Student Map View Controller-->
+        <scene sceneID="zX8-Jc-PEg">
+            <objects>
+                <viewController id="g8F-qa-wqc" customClass="StudentMapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3ZC-ez-eU7"/>
+                        <viewControllerLayoutGuide type="bottom" id="bAV-zS-7Od"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XwY-8O-8Ua">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9xl-qp-Gy4">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9xl-qp-Gy4" firstAttribute="leading" secondItem="XwY-8O-8Ua" secondAttribute="leading" id="FUK-BO-g9J"/>
+                            <constraint firstAttribute="trailing" secondItem="9xl-qp-Gy4" secondAttribute="trailing" id="eSG-lG-q5j"/>
+                            <constraint firstItem="bAV-zS-7Od" firstAttribute="top" secondItem="9xl-qp-Gy4" secondAttribute="bottom" id="sli-Wj-qSX"/>
+                            <constraint firstItem="9xl-qp-Gy4" firstAttribute="top" secondItem="3ZC-ez-eU7" secondAttribute="bottom" id="tSb-L1-6uj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="9xl-qp-Gy4" id="b2c-dV-UCE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hAc-hO-H30" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1145" y="37"/>
+        </scene>
         <!--Udacity Auth View Controller-->
         <scene sceneID="LhX-V8-ypW">
             <objects>
@@ -158,6 +190,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="spn-93-f0M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="51" y="703"/>
+        </scene>
+        <!--Student Table View Controller-->
+        <scene sceneID="rRh-Vp-qXQ">
+            <objects>
+                <viewController storyboardIdentifier="StudentTableViewController" id="yWI-mI-hUs" customClass="StudentTableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CA6-Ww-0e6"/>
+                        <viewControllerLayoutGuide type="bottom" id="bf2-sb-h9z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N5S-JE-sfC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8x1-Vg-QiD">
+                                <rect key="frame" x="20" y="20" width="374" height="716"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StudentCell" id="eRj-2g-5wT">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eRj-2g-5wT" id="b9Q-8e-dLa">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="yWI-mI-hUs" id="FSy-2g-zdG"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8x1-Vg-QiD" firstAttribute="leading" secondItem="N5S-JE-sfC" secondAttribute="leadingMargin" id="FRX-6Q-fIf"/>
+                            <constraint firstItem="bf2-sb-h9z" firstAttribute="top" secondItem="8x1-Vg-QiD" secondAttribute="bottom" id="HWo-UF-0FX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8x1-Vg-QiD" secondAttribute="trailing" id="jIX-lU-5vH"/>
+                            <constraint firstItem="8x1-Vg-QiD" firstAttribute="top" secondItem="CA6-Ww-0e6" secondAttribute="bottom" id="tu5-gV-cMU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="studentTableView" destination="8x1-Vg-QiD" id="Vzi-uV-biP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3dS-15-DAW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1145" y="703"/>
         </scene>
     </scenes>
     <resources>
