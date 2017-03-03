@@ -24,5 +24,19 @@ extension UdacityClient{
         static let FacebookMobile = "facebook_mobile"
         static let AccessToken = "access_token"
     }
+    
+    //Error Messages
+    
+    struct ErrorMessage {
+        static let DataError = "Error Getting Data!"
+        static let statMapError = "Failed To Geocode!"
+        static let UpdateError = "Failed To Update Location!"
+        static let InvalidLink = "Invalid Link!"
+        static let MissingLink = "Need To Enter Link!"
+        static let CantLogin = "Network Connection Is Offline!"
+        static let InvalidEmail = "Invalid Email Or Password!"
+        
+    }
+
 
 }

@@ -9,13 +9,19 @@
 import Foundation
 import FacebookCore
 import FacebookLogin
+import FBSDKCoreKit
 
 
 class FacebookClient: NSObject {
     
     func loginStart(completionHandlerForLogin: @escaping (_ authenticationToken:String?, _ error: Error?) -> Void){
-        if let accessToken = AccessToken.current{
-            completionHandlerForLogin(accessToken.authenticationToken, nil)
+        if let accessToken = FBSDKAccessToken.current(){
+      
+            print("AutentificationToke: \(accessToken.tokenString)")
+            
+       
+            
+            completionHandlerForLogin(accessToken.tokenString, nil)
         }else{
             let userInfo = [NSLocalizedDescriptionKey : "User not login: "]
             completionHandlerForLogin(nil,NSError(domain: "loginStart", code: 1, userInfo: userInfo))
@@ -30,7 +36,8 @@ class FacebookClient: NSObject {
             case .failed(let error):
                 completionHandlerForLogin(nil, error)
             case .cancelled:
-                print("User cancelled Login")
+                let userInfo = [NSLocalizedDescriptionKey : "User cancelled Login"]
+                completionHandlerForLogin(nil,NSError(domain: "login Button Press", code: 1, userInfo: userInfo))
             case .success(_, _, _):
                 self.fecthProfile(completionHandlerForConvertData: completionHandlerForLogin)
             }
@@ -44,7 +51,6 @@ class FacebookClient: NSObject {
         let graphRequest = GraphRequest(graphPath: "me", parameters: params)
         graphRequest.start {
             (urlResponse, requestResult) in
-            
             switch requestResult {
             case .failed(let error):
                 completionHandlerForConvertData(nil, error)

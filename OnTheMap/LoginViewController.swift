@@ -11,7 +11,9 @@ import UIKit
 class LoginViewController: UIViewController {
     
     var client = UdacityClient()
-
+    let indicator = IndicatorView()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -19,31 +21,40 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
         configureTextField(emailTextField, nameImage: "envelope")
         configureTextField(passwordTextField, nameImage: "key")
         
-    }
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
     
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
         
-        FacebookClient.sharedInstance().loginStart { (result, error) in
+        /*FacebookClient.sharedInstance().loginStart { (result, error) in
             if let error = error{
                 print(error)
             }else{
-               
-                
-                
-               /* let storyboard = UIStoryboard (name: "Main", bundle: nil)
-                let studentViewController = storyboard.instantiateViewController(withIdentifier: "StudentTableViewController")as! StudentTableViewController
-                self.present(studentViewController, animated: true, completion: nil)*/
-                
-                
+                let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.FacebookMobile)\": { \"\(UdacityClient.JSONBodyKeys.AccessToken)\": \"" + result! + "\"}}"
+    
+                let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
+                    (result, error) in
+                    if let error = error {
+                        let message = error.userInfo.description
+                        DispatchQueue.main.async {
+                            self.showAlertFaildLogin(message)
+                        }
+                    }else{
+                        DispatchQueue.main.async {
+                            self.completeLogin()
+                        }
+                    }
+                }
             }
-        }
+        }*/
 
     }
     
@@ -51,8 +62,8 @@ class LoginViewController: UIViewController {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
+    
     // MARK: - LoginViewController (Configure UI)
-
     func configureTextField(_ textField: UITextField, nameImage: String){
         let imageView = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 20))
         let image = UIImage(named: nameImage);
@@ -74,7 +85,6 @@ class LoginViewController: UIViewController {
     }
     
     func keyboardWillShow(_ notification:Notification) {
-        
         if (UIDevice.current.orientation != UIDeviceOrientation.landscapeLeft) &&
             (UIDevice.current.orientation != UIDeviceOrientation.landscapeRight) {
            
@@ -106,26 +116,50 @@ class LoginViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    // MARK: Login
+    
+    private func completeLogin() {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "ManagerNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
+    }
+
+    
     @IBAction func loginPressed(_ sender: Any) {
+        indicator.loadingView(true)
+        
+        
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             //Username or Password Empty.
+            indicator.loadingView(false)
             showAlertFaildLogin("Username or Password Empty.")
+            
 
         } else {
-            
             let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.Udacity)\": { \"\(UdacityClient.JSONBodyKeys.Username)\": \"\(emailTextField.text!)\", \"\(UdacityClient.JSONBodyKeys.Password)\":\"\(passwordTextField.text!)\"}}"
             
-           
             let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
-                (result, error) in
-                if let error = error {
-                    let message = error.userInfo.description
+                (result, error, errorMessage) in
+                if let errorMessage = errorMessage {
                     DispatchQueue.main.async {
-                        self.showAlertFaildLogin(message)
+                        self.indicator.loadingView(false)
+                        self.showAlertFaildLogin(errorMessage)
                     }
                 }else{
-                    print("good")
-                    print("\(result)")
+                    DispatchQueue.main.async {
+                        
+                        guard let dictionary = result as? [String: Any] else {
+                            //handleError(error: "Can't Parse Dictionary", errormsg: self.appDelegate.errorMessage.CantLogin)
+                            return
+                        }
+                        
+                        guard let account = dictionary["account"] as? [String: Any] else{
+                            return
+                        }
+                        
+                        
+                        self.indicator.loadingView(false)
+                        self.completeLogin()
+                    }
                 }
             }
         }
@@ -139,7 +173,6 @@ class LoginViewController: UIViewController {
                 print("error")
             }
         }
-     
     }
 
     @IBAction func loginFacebookPressed(_ sender: Any) {
@@ -153,9 +186,13 @@ class LoginViewController: UIViewController {
 
         }
     }
-    
-    
-   
+}
 
+
+extension LoginViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
 }
 

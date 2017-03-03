@@ -37,7 +37,7 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
                     // Here we create the annotation and set its coordiate, title, and subtitle properties
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = coordinate
-                    annotation.title = "\(first) \(last)"
+                    annotation.title =  first! + " " + last!
                     annotation.subtitle = mediaURL
                     
                     // Finally we place the annotation in an array of annotations.
@@ -49,9 +49,6 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
                     }
                     
                 }
-
-            
-                //print(error)
             }
 
         }
@@ -59,8 +56,6 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
-        
-        
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
@@ -81,12 +76,8 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView{
             let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle!{
-               // app.open(NSURL(string: toOpen)! as URL, options: nil, completionHandler: nil)
+                app.openURL(URL(string: toOpen)!)
             }
         }
-        
-        
     }
-
-
 }
