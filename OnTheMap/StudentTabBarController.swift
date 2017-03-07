@@ -16,14 +16,7 @@ class StudentTabBarController: UITabBarController {
 
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-
-   
     @IBAction func refreshPressed(_ sender: Any) {
         print("refreshPressed")
     }
@@ -35,6 +28,9 @@ class StudentTabBarController: UITabBarController {
     
     @IBAction func pinPressed(_ sender: Any) {
         print("pinPressed")
+        
+        let controller = storyboard!.instantiateViewController(withIdentifier: "InformationPostingViewController") as! InformationPostingViewController
+        present(controller, animated: true, completion: nil)
     }
     
     func refreshSelectedViewController() {
