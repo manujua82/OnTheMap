@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 extension ParseClient {
+
     
-    func getStudentLocation(_ completionHandlerForGetStudents: @escaping (_ result: [StudentLocation]?, _ error: NSError?) -> Void) {
+    func getStudentLocation(_ completionHandlerForGetStudents: @escaping (_ result: Bool, _ error: NSError?) -> Void) {
         
         let parameters = [ParseClient.ParameterKeys.Limit: "100"]
         
@@ -21,13 +22,14 @@ extension ParseClient {
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
-                completionHandlerForGetStudents(nil, error)
+                completionHandlerForGetStudents(false, error)
             } else {
                 if let results = results?[ParseClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
                     let students = StudentLocation.moviesFromResults(results)
-                    completionHandlerForGetStudents(students, nil)
+                    self.appDelegate.students = students
+                    completionHandlerForGetStudents(true, nil)
                 } else {
-                    completionHandlerForGetStudents(nil, NSError(domain: "get students parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]))
+                    completionHandlerForGetStudents(false, NSError(domain: "get students parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]))
                 }
             }
         }

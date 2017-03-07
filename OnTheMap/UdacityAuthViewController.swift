@@ -32,7 +32,6 @@ class UdacityAuthViewController: UIViewController {
     }
     
     // MARK: Cancel Auth Flow
-
     func cancelAuth() {
         dismiss(animated: true, completion: nil)
     }

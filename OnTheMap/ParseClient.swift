@@ -15,6 +15,8 @@ class ParseClient: NSObject {
     // shared session
     var session = URLSession.shared
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     func taskForGETMethod(parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */

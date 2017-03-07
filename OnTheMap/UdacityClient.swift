@@ -19,6 +19,8 @@ class UdacityClient: NSObject {
     
     var sessionID : String? = nil
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     // MARK: POST
     func taskForPOSTMethod(_ method: String,jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void) -> URLSessionDataTask {
         
@@ -56,6 +58,8 @@ class UdacityClient: NSObject {
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             let range = Range(uncheckedBounds: (5, data.count))
             let newData = data.subdata(in: range) /* subset response data! */
+            
+            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         task.resume()
@@ -93,6 +97,73 @@ class UdacityClient: NSObject {
         }
         
         completionHandlerForConvertData(parsedResult as AnyObject, nil, nil)
+    }
+    
+    
+    //Login
+    func loginWithUdacity(_ username: String, password: String, completionHandlerForLogin: @escaping ( _ error: NSError?, _ errorMessage: String?) -> Void) {
+        let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": { \"\(JSONBodyKeys.Username)\": \"\(username)\", \"\(JSONBodyKeys.Password)\":\"\(password)\"}}"
+        
+        let _ = taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
+            (result, error, errorMessage) in
+            
+            if let errorMessage = errorMessage {
+                completionHandlerForLogin(error, errorMessage)
+            }else{
+                
+                
+                
+                func sendError(error: String, errormsg: String) {
+                    let userInfo = [NSLocalizedDescriptionKey : error]
+                    completionHandlerForLogin(NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
+                }
+            
+                guard let dictionary = result as? [String: Any] else {
+                    sendError(error: "Cannot Parse Dictionary", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                    
+                guard let account = dictionary["account"] as? [String: Any] else{
+                    sendError(error: "Cannot Find Key 'Account' In \(dictionary)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let session = dictionary["session"] as? [String: Any] else{
+                    sendError(error: "Cannot Find Key 'session' In \(dictionary)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                //Utilize Data
+                guard let key = account["key"] as? String else{
+                    sendError(error: "Cannot Find Key 'key' In \(account)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let registered = account["registered"] as? Bool else{
+                    sendError(error: "Cannot Find Key 'registered' In \(account)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let id = session["id"] as? String else{
+                    sendError(error: "Cannot Find Key 'id' In \(session)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let expiration = session["expiration"] as? String else{
+                    sendError(error: "Cannot Find Key 'expiration' In \(session)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                self.appDelegate.account.key = key
+                self.appDelegate.account.registetered = registered
+                
+                self.appDelegate.session.id = id
+                self.appDelegate.session.expiration = expiration
+                
+                completionHandlerForLogin(nil,nil)
+            }
+        }
+
     }
 
     

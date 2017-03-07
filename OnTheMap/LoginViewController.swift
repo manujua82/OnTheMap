@@ -127,41 +127,35 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: Any) {
         indicator.loadingView(true)
         
-        
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            //Username or Password Empty.
             indicator.loadingView(false)
             showAlertFaildLogin("Username or Password Empty.")
-            
 
         } else {
-            let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.Udacity)\": { \"\(UdacityClient.JSONBodyKeys.Username)\": \"\(emailTextField.text!)\", \"\(UdacityClient.JSONBodyKeys.Password)\":\"\(passwordTextField.text!)\"}}"
-            
-            let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
-                (result, error, errorMessage) in
+    
+            UdacityClient.sharedInstance().loginWithUdacity(emailTextField.text!, password: passwordTextField.text!, completionHandlerForLogin: { (error, errorMessage) in
                 if let errorMessage = errorMessage {
                     DispatchQueue.main.async {
                         self.indicator.loadingView(false)
                         self.showAlertFaildLogin(errorMessage)
                     }
                 }else{
-                    DispatchQueue.main.async {
-                        
-                        guard let dictionary = result as? [String: Any] else {
-                            //handleError(error: "Can't Parse Dictionary", errormsg: self.appDelegate.errorMessage.CantLogin)
-                            return
+                    
+                    ParseClient.sharedInstance().getStudentLocation { (result, error) in
+                        if let error = error{
+                            DispatchQueue.main.async {
+                                self.indicator.loadingView(false)
+                                self.showAlertFaildLogin(error.description)
+                            }
+                        }else{
+                            DispatchQueue.main.async {
+                                self.indicator.loadingView(false)
+                                self.completeLogin()
+                            }
                         }
-                        
-                        guard let account = dictionary["account"] as? [String: Any] else{
-                            return
-                        }
-                        
-                        
-                        self.indicator.loadingView(false)
-                        self.completeLogin()
                     }
                 }
-            }
+            })
         }
     }
     

@@ -9,13 +9,9 @@
 import Foundation
 
 struct UdacityAccount {
-    var key: Int
-    var registetered: Int
+    var key: String?
+    var registetered: Bool = false
     
-    init() {
-        key = 0
-        registetered = 0
-    }
 }
 
 struct UdacitySession {
