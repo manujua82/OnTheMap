@@ -10,6 +10,8 @@ import Foundation
 
 struct UdacityAccount {
     var key: String?
+    var lastName: String?
+    var firstName: String?
     var registetered: Bool = false
     
 }

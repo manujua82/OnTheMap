@@ -22,6 +22,13 @@ class InformationPostingViewController: UIViewController {
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     
+    var latitude: Double?
+    var longitude: Double?
+    var mapString: String?
+    
+    var isOverWritten: Bool = false
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,13 +61,106 @@ class InformationPostingViewController: UIViewController {
     }
 
     @IBAction func findMapPressed(_ sender: Any) {
-        cancelButton.titleLabel?.textColor = UIColor.white
-        showInformationPostin(true)
-        showLinkPosting(false)
+        performSearch()
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    @IBAction func submitPressed(_ sender: Any) {
+        
+        if let mediaUrl = linkTextField.text {
+            if verifyUrl(urlString: mediaUrl) {
+                
+                if !isOverWritten{
+                    print("uniqueKey: \(appDelegate.account.key)")
+                    print("firstName: \(appDelegate.account.firstName)")
+                    print("lastName: \(appDelegate.account.lastName)")
+                    print("mapString: " + self.mapString!)
+                    
+                    
+                    //print("mapString: \()")
+                    
+                    /*
+                     "{\"uniqueKey\": \"1234\",
+                     \"firstName\": \"John\",
+                     \"lastName\": \"Doe\",
+                     \"mapString\": \"Mountain View, CA\",
+                     \"mediaURL\": \"https://udacity.com\",
+                     \"latitude\": 37.386052,
+                     \"longitude\": -122.083851}"
+                     */
+                    
+                    
+                }
+
+            }else{
+                UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", "Link is not valid")
+            }
+        }else{
+            UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", "Link is empty")
+        }
+    }
+    
+    
+    func performSearch() {
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = geocodeTextField.text
+        request.region = mapView.region
+        
+        let search = MKLocalSearch(request: request)
+        search.start(completionHandler: {(response, error) in
+            
+            if error != nil {
+                let message = "Error occured in search location: \(error!.localizedDescription)"
+                UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", message)
+            } else if response!.mapItems.count == 0 {
+                UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", "No matches found")
+            } else {
+                
+                DispatchQueue.main.async {
+                    self.cancelButton.titleLabel?.textColor = UIColor.white
+                    self.showInformationPostin(true)
+                    self.showLinkPosting(false)
+                }
+                
+                let pointAnnotation = MKPointAnnotation()
+                pointAnnotation.title = self.geocodeTextField.text
+                self.latitude = response!.boundingRegion.center.latitude
+                self.longitude = response!.boundingRegion.center.longitude
+                
+                let coordinate = CLLocationCoordinate2D(latitude: self.latitude!, longitude: self.longitude!)
+                pointAnnotation.coordinate = coordinate
+              
+                let item = response!.mapItems[0]
+                if let title = item.placemark.title{
+                    self.mapString = title
+                }else{
+                    self.mapString = self.geocodeTextField.text
+                }
+
+                self.mapView.addAnnotation(pointAnnotation)
+                
+                let region = MKCoordinateRegionMakeWithDistance(pointAnnotation.coordinate, 50000, 50000)
+                self.mapView.setRegion(region, animated: true)
+            }
+        })
+    }
+    
+    
+    func verifyUrl (urlString: String?) -> Bool {
+        //Check for nil
+        if let urlString = urlString {
+            // create URL instance
+            if let url = URL(string: urlString) {
+                // check if your application can open the URL instance
+                return UIApplication.shared.canOpenURL(url)
+            }
+        }
+        return false
     }
 }
 

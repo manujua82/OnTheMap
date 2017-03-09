@@ -10,7 +10,6 @@ import Foundation
 
 
 struct StudentLocation {
-    
     let objectId: String
     let uniqueKey: String?
     let firstName: String?
@@ -95,8 +94,7 @@ struct StudentLocation {
         }
         
         return students
-       
+        
     }
-
     
 }

@@ -27,9 +27,21 @@ class StudentTabBarController: UITabBarController {
     }
     
     @IBAction func pinPressed(_ sender: Any) {
-        print("pinPressed")
-        
+        ParseClient.sharedInstance().getStudentLocation({ (_, error, _) in
+            if let error = error {
+                DispatchQueue.main.async {
+                    print("\(error)")
+                    self.openInformationVIew(isOverWritten: false)
+                }
+            }else{
+                //Alert about the overwrite
+            }
+        })
+    }
+    
+    func openInformationVIew(isOverWritten: Bool){
         let controller = storyboard!.instantiateViewController(withIdentifier: "InformationPostingViewController") as! InformationPostingViewController
+        controller.isOverWritten =  isOverWritten
         present(controller, animated: true, completion: nil)
     }
     

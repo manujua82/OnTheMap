@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var account: UdacityAccount = UdacityAccount()
     var session: UdacitySession = UdacitySession()
     var students: [StudentLocation] = []
+    var user: StudentLocation?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

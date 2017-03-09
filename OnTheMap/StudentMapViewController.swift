@@ -19,7 +19,7 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        mapView.delegate = self
         self.students = self.appDelegate.students
         if self.students.count > 0 {
             var annotations = [MKPointAnnotation]()
@@ -71,8 +71,10 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView{
             let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle!{
-                app.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
-                //app.openURL(URL(string: toOpen)!)
+                let trimmedString = toOpen.trimmingCharacters(in: .whitespaces)
+                if trimmedString != "" {
+                    app.open(URL(string: trimmedString)!, options: [:], completionHandler: nil)
+                }
             }
         }
     }

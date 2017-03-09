@@ -21,6 +21,56 @@ class UdacityClient: NSObject {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    
+    // MARK: GET
+    
+    func taskForGETMethod(_ method: String, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void) -> URLSessionDataTask {
+        
+        /* 2/3. Build the URL, Configure the request */
+        let request = NSMutableURLRequest(url: URL(string: method)!)
+        
+        /* 4. Make the request */
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String, _ errorMessage: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo), errorMessage)
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)", ErrorMessage.DataError)
+                return
+            }
+            
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!", ErrorMessage.DataError)
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!", ErrorMessage.DataError)
+                return
+            }
+            
+            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            let range = Range(uncheckedBounds: (5, data.count))
+            let newData = data.subdata(in: range) /* subset response data! */
+            
+            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGET)
+        }
+        
+        /* 7. Start the request */
+        task.resume()
+        
+        return task
+    }
+
+    
     // MARK: POST
     func taskForPOSTMethod(_ method: String,jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void) -> URLSessionDataTask {
         
@@ -100,6 +150,9 @@ class UdacityClient: NSObject {
     }
     
     
+
+    
+    
     //Login
     func loginWithUdacity(_ username: String, password: String, completionHandlerForLogin: @escaping ( _ error: NSError?, _ errorMessage: String?) -> Void) {
         let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": { \"\(JSONBodyKeys.Username)\": \"\(username)\", \"\(JSONBodyKeys.Password)\":\"\(password)\"}}"
@@ -160,11 +213,65 @@ class UdacityClient: NSObject {
                 self.appDelegate.session.id = id
                 self.appDelegate.session.expiration = expiration
                 
-                completionHandlerForLogin(nil,nil)
+                
+                self.getUserData(key: key, completionHandlerForGetUserData: completionHandlerForLogin)
             }
         }
 
     }
+    
+    func getUserData(key: String, completionHandlerForGetUserData: @escaping ( _ error: NSError?, _ errorMessage: String?) -> Void){
+        
+        var mutableMethod: String = Constants.GetUserURL
+        mutableMethod = substituteKeyInMethod(mutableMethod, key: URLKeys.UserID, value: key)!
+        print("mutaableMethod: \(mutableMethod)")
+        let _ = taskForGETMethod(mutableMethod) { (result, error, errorMessage) in
+            if let errorMessage = errorMessage {
+                completionHandlerForGetUserData(error, errorMessage)
+            }else{
+                func sendError(error: String, errormsg: String) {
+                    let userInfo = [NSLocalizedDescriptionKey : error]
+                    completionHandlerForGetUserData(NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
+                }
+                
+                guard let dictionary = result as? [String: Any] else {
+                    sendError(error: "Cannot Parse Dictionary", errormsg: ErrorMessage.DataError)
+                    return
+                }
+                
+                guard let user = dictionary["user"] as? [String:Any] else{
+                    sendError(error: "Cannot Find Key 'user' In \(dictionary)", errormsg: ErrorMessage.DataError)
+                    return
+                }
+                
+                guard let lastName = user["last_name"] as? String else{
+                    sendError(error: "Cannot Find Key 'last_name' In \(user)", errormsg: ErrorMessage.DataError)
+                    return
+                }
+                
+                guard let firstName = user["first_name"] as? String else{
+                    sendError(error: "Cannot Find Key 'first_name' In \(user)", errormsg: ErrorMessage.DataError)
+                    return
+                }
+                
+                self.appDelegate.account.lastName = lastName
+                self.appDelegate.account.firstName = firstName
+                
+                completionHandlerForGetUserData(nil,nil)
+              
+                
+            }
+        }
+    }
+    
+    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
+        if method.range(of: "{\(key)}") != nil {
+            return method.replacingOccurrences(of: "{\(key)}", with: value)
+        } else {
+            return nil
+        }
+    }
+
 
     
     // MARK: Shared Instance

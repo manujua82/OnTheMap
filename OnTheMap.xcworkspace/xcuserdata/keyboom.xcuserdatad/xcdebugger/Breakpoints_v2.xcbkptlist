@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OnTheMap/ParseConvenience.swift"
-            timestampString = "510590806.444176"
+            timestampString = "510631160.719269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "getStudentLocation(_:)"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "getStudentsLocation(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -86,16 +86,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OnTheMap/StudentMapViewController.swift"
-            timestampString = "510591242.596061"
+            filePath = "OnTheMap/LoginViewController.swift"
+            timestampString = "510675420.615747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "mapView(_:viewFor:)"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "loginPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -141,11 +141,11 @@ class LoginViewController: UIViewController {
                     }
                 }else{
                     
-                    ParseClient.sharedInstance().getStudentLocation { (result, error) in
-                        if let error = error{
+                    ParseClient.sharedInstance().getStudentsLocation { (result, error, errorMessage) in
+                        if let _ = error{
                             DispatchQueue.main.async {
                                 self.indicator.loadingView(false)
-                                self.showAlertFaildLogin(error.description)
+                                self.showAlertFaildLogin(errorMessage!)
                             }
                         }else{
                             DispatchQueue.main.async {
