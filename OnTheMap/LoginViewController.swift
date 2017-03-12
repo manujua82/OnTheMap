@@ -32,29 +32,8 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.indicadorView.loadingView(false)
         subscribeToKeyboardNotifications()
-        
-        /*FacebookClient.sharedInstance().loginStart { (result, error) in
-            if let error = error{
-                print(error)
-            }else{
-                let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.FacebookMobile)\": { \"\(UdacityClient.JSONBodyKeys.AccessToken)\": \"" + result! + "\"}}"
-    
-                
-                let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
-                    (result, error, errorMessage) in
-                    if let error = error {
-                        let message = error.userInfo.description
-                        DispatchQueue.main.async {
-                            self.showAlertFaildLogin(message)
-                        }
-                    }else{
-                        self.completeLogin()
-                    }
-                }
-            }
-        }*/
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -109,21 +88,15 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
-    func showAlertFaildLogin(_ message: String){
-        let alert = UIAlertController(title: "Loging Faild", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
     
     // MARK: Login
-    
     private func completeLogin() {
         ParseClient.sharedInstance().getStudentsLocation { (result, error, errorMessage) in
             if let _ = error{
                 DispatchQueue.main.async {
                     //self.indicator.loadingView(false)
                     self.indicadorView.loadingView(false)
-                    self.showAlertFaildLogin(errorMessage!)
+                    UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, errorMessage!)
                 }
             }else{
                 self.appDelegate.students = result!
@@ -145,27 +118,29 @@ class LoginViewController: UIViewController {
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             //indicator.loadingView(false)
             indicadorView.loadingView(false)
-            showAlertFaildLogin("Username or Password Empty.")
+            UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, UdacityClient.ErrorMessage.InvalidEmail)
 
         } else {
     
-            UdacityClient.sharedInstance().loginWithUdacity(emailTextField.text!, password: passwordTextField.text!, completionHandlerForLogin: { (error, errorMessage) in
+            UdacityClient.sharedInstance().loginWithUdacity(emailTextField.text!, password: passwordTextField.text!, completionHandlerForLogin: { (account, session, error, errorMessage) in
                 if let errorMessage = errorMessage {
                     DispatchQueue.main.async {
                         //self.indicator.loadingView(false)
                         self.indicadorView.loadingView(false)
-                        self.showAlertFaildLogin(errorMessage)
+                        UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, errorMessage)
                     }
                 }else{
+                   self.appDelegate.account = account!
+                   self.appDelegate.session = session!
                    self.completeLogin()
-                   self.indicadorView.loadingView(false)
+                   
                 }
             })
         }
     }
     
     @IBAction func singUpPressed(_ sender: Any) {
-        let _ = UdacityClient.sharedInstance().udacitySingUpURL(self){ (success, error) in
+        UdacityClient.sharedInstance().udacitySingUpURL(self){ (success, error) in
             if success{
                 print("good")
             }else{
@@ -176,15 +151,12 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginFacebookPressed(_ sender: Any) {
         indicadorView.loadingView(true)
+        
         FacebookClient.sharedInstance().loginButtonPressed(self) { (result, error) in
             if let error = error{
                 self.indicadorView.loadingView(false)
                 print(error)
             }else{
-                
-                //print("result: \(result)")
-                //self.completeLogin()
-                self.indicadorView.loadingView(false)
                 self.loginFacebookWithUdacity()
             }
         }
@@ -193,22 +165,23 @@ class LoginViewController: UIViewController {
     func loginFacebookWithUdacity(){
         FacebookClient.sharedInstance().loginStart { (result, error) in
             if let error = error{
-                print(error)
+                self.indicadorView.loadingView(false)
+                UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, error.localizedDescription)
             }else{
-                let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.FacebookMobile)\": { \"\(UdacityClient.JSONBodyKeys.AccessToken)\": \"" + result! + "\"}}"
-                
-                
-                let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
-                    (result, error, errorMessage) in
-                    if let error = error {
-                        let message = error.userInfo.description
+                UdacityClient.sharedInstance().loginWithFacebook(result!, completionHandlerForLogin: { (account, session, error, errorMessage) in
+                    
+                    if let errorMessage = errorMessage {
                         DispatchQueue.main.async {
-                            self.showAlertFaildLogin(message)
+                            //self.indicator.loadingView(false)
+                            self.indicadorView.loadingView(false)
+                            UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, errorMessage)
                         }
                     }else{
+                        self.appDelegate.account = account!
+                        self.appDelegate.session = session!
                         self.completeLogin()
                     }
-                }
+                })
             }
         }
     }

@@ -45,6 +45,7 @@ extension UdacityClient{
         static let SchemaMismatch = "Schema mismatch for StudentLocation"
         static let TitleInformation = "Information Posting Faild"
         static let NoMatches = "No matches found"
+        static let LogigFaild = "Loging Faild"
         
     }
     

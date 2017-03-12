@@ -369,7 +369,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKa-7V-1Jz">
-                                <rect key="frame" x="20" y="20" width="374" height="716"/>
+                                <rect key="frame" x="20" y="40" width="374" height="696"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -377,7 +377,7 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="JKa-7V-1Jz" secondAttribute="trailing" id="5Mv-2T-Vse"/>
                             <constraint firstItem="rOB-vG-gZT" firstAttribute="top" secondItem="JKa-7V-1Jz" secondAttribute="bottom" id="7r2-SF-J8k"/>
-                            <constraint firstItem="JKa-7V-1Jz" firstAttribute="top" secondItem="mYN-z6-V2b" secondAttribute="bottom" id="QCr-IX-sr2"/>
+                            <constraint firstItem="JKa-7V-1Jz" firstAttribute="top" secondItem="mYN-z6-V2b" secondAttribute="bottom" constant="20" id="QCr-IX-sr2"/>
                             <constraint firstItem="JKa-7V-1Jz" firstAttribute="leading" secondItem="pv8-B4-ImX" secondAttribute="leadingMargin" id="Tu0-R5-LW0"/>
                         </constraints>
                     </view>

@@ -16,10 +16,8 @@ class UdacityClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    
     var sessionID : String? = nil
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     
     // MARK: GET
@@ -60,7 +58,7 @@ class UdacityClient: NSObject {
             let range = Range(uncheckedBounds: (5, data.count))
             let newData = data.subdata(in: range) /* subset response data! */
             
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
+            //print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGET)
         }
         
@@ -109,7 +107,7 @@ class UdacityClient: NSObject {
             let range = Range(uncheckedBounds: (5, data.count))
             let newData = data.subdata(in: range) /* subset response data! */
             
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
+            //print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         task.resume()
@@ -153,22 +151,24 @@ class UdacityClient: NSObject {
 
     
     
-    //Login
-    func loginWithUdacity(_ username: String, password: String, completionHandlerForLogin: @escaping ( _ error: NSError?, _ errorMessage: String?) -> Void) {
+    //Login with Udacity Credentials
+    func loginWithUdacity(_ username: String, password: String, completionHandlerForLogin: @escaping (_ account: UdacityAccount?, _ session: UdacitySession?,  _ error: NSError?, _ errorMessage: String?) -> Void) {
         let jsonBody = "{\"\(JSONBodyKeys.Udacity)\": { \"\(JSONBodyKeys.Username)\": \"\(username)\", \"\(JSONBodyKeys.Password)\":\"\(password)\"}}"
         
-        let _ = taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
+        login(jsonBody, completionHandlerForLogin: completionHandlerForLogin)
+        
+        /*let _ = taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
             (result, error, errorMessage) in
             
             if let errorMessage = errorMessage {
-                completionHandlerForLogin(error, errorMessage)
+                completionHandlerForLogin(nil, nil, error, errorMessage)
             }else{
                 
                 
                 
                 func sendError(error: String, errormsg: String) {
                     let userInfo = [NSLocalizedDescriptionKey : error]
-                    completionHandlerForLogin(NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
+                    completionHandlerForLogin(nil, nil,NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
                 }
             
                 guard let dictionary = result as? [String: Any] else {
@@ -207,30 +207,110 @@ class UdacityClient: NSObject {
                     return
                 }
                 
-                self.appDelegate.account.key = key
-                self.appDelegate.account.registetered = registered
                 
-                self.appDelegate.session.id = id
-                self.appDelegate.session.expiration = expiration
+                var userAccount = UdacityAccount()
+                userAccount.key = key
+                userAccount.registetered = registered
+                
+                var userSession = UdacitySession()
+                userSession.id = id
+                userSession.expiration = expiration
                 
                 
-                self.getUserData(key: key, completionHandlerForGetUserData: completionHandlerForLogin)
+                self.getUserData(userAccount, userSession, completionHandlerForGetUserData: completionHandlerForLogin)
+            }
+        }*/
+
+    }
+    
+    
+    // Login with facebook
+    func loginWithFacebook(_ authenticationToken:String, completionHandlerForLogin: @escaping (_ account: UdacityAccount?, _ session: UdacitySession?,  _ error: NSError?, _ errorMessage: String?) -> Void) {
+        
+        let jsonBody = "{\"\(JSONBodyKeys.FacebookMobile)\": { \"\(JSONBodyKeys.AccessToken)\": \"" + authenticationToken + "\"}}"
+        login(jsonBody, completionHandlerForLogin: completionHandlerForLogin)
+    }
+    
+    
+    func login(_ jsonBody :String, completionHandlerForLogin: @escaping (_ account: UdacityAccount?, _ session: UdacitySession?,  _ error: NSError?, _ errorMessage: String?) -> Void) {
+        
+        let _ = taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
+            (result, error, errorMessage) in
+            
+            if let errorMessage = errorMessage {
+                completionHandlerForLogin(nil, nil, error, errorMessage)
+            }else{
+                
+                func sendError(error: String, errormsg: String) {
+                    let userInfo = [NSLocalizedDescriptionKey : error]
+                    completionHandlerForLogin(nil, nil,NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
+                }
+                
+                guard let dictionary = result as? [String: Any] else {
+                    sendError(error: "Cannot Parse Dictionary", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let account = dictionary["account"] as? [String: Any] else{
+                    sendError(error: "Cannot Find Key 'Account' In \(dictionary)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let session = dictionary["session"] as? [String: Any] else{
+                    sendError(error: "Cannot Find Key 'session' In \(dictionary)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                //Utilize Data
+                guard let key = account["key"] as? String else{
+                    sendError(error: "Cannot Find Key 'key' In \(account)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let registered = account["registered"] as? Bool else{
+                    sendError(error: "Cannot Find Key 'registered' In \(account)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let id = session["id"] as? String else{
+                    sendError(error: "Cannot Find Key 'id' In \(session)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                guard let expiration = session["expiration"] as? String else{
+                    sendError(error: "Cannot Find Key 'expiration' In \(session)", errormsg: ErrorMessage.CantLogin)
+                    return
+                }
+                
+                
+                var userAccount = UdacityAccount()
+                userAccount.key = key
+                userAccount.registetered = registered
+                
+                var userSession = UdacitySession()
+                userSession.id = id
+                userSession.expiration = expiration
+                
+                
+                self.getUserData(userAccount, userSession, completionHandlerForGetUserData: completionHandlerForLogin)
             }
         }
 
     }
+
     
-    func getUserData(key: String, completionHandlerForGetUserData: @escaping ( _ error: NSError?, _ errorMessage: String?) -> Void){
+    func getUserData(_ userAccount: UdacityAccount?,_ userSession: UdacitySession, completionHandlerForGetUserData: @escaping (_ account: UdacityAccount?, _ session: UdacitySession?, _ error: NSError?, _ errorMessage: String?) -> Void){
         
+
         var mutableMethod: String = Constants.GetUserURL
-        mutableMethod = substituteKeyInMethod(mutableMethod, key: URLKeys.UserID, value: key)!
+        mutableMethod = substituteKeyInMethod(mutableMethod, key: URLKeys.UserID, value: (userAccount?.key!)!)!
         let _ = taskForGETMethod(mutableMethod) { (result, error, errorMessage) in
             if let errorMessage = errorMessage {
-                completionHandlerForGetUserData(error, errorMessage)
+                completionHandlerForGetUserData(nil, nil, error, errorMessage)
             }else{
                 func sendError(error: String, errormsg: String) {
                     let userInfo = [NSLocalizedDescriptionKey : error]
-                    completionHandlerForGetUserData(NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
+                    completionHandlerForGetUserData(nil, nil, NSError(domain: "loginWithUdacity", code: 1, userInfo: userInfo), errormsg)
                 }
                 
                 guard let dictionary = result as? [String: Any] else {
@@ -253,12 +333,15 @@ class UdacityClient: NSObject {
                     return
                 }
                 
-                self.appDelegate.account.lastName = lastName
-                self.appDelegate.account.firstName = firstName
                 
-                completionHandlerForGetUserData(nil,nil)
-              
-                
+                if var userAccount = userAccount {
+                    userAccount.lastName = lastName
+                    userAccount.firstName = firstName
+                    completionHandlerForGetUserData(userAccount, userSession, nil, nil)
+                }else{
+                    sendError(error: "Key Error", errormsg: ErrorMessage.DataError)
+                    return
+                }   
             }
         }
     }
