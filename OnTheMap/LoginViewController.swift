@@ -11,7 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
     
     var client = UdacityClient()
-    let indicator = IndicatorView()
+    var indicadorView: IndicatorUIView = IndicatorUIView()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -25,9 +25,9 @@ class LoginViewController: UIViewController {
         configureTextField(emailTextField, nameImage: "envelope")
         configureTextField(passwordTextField, nameImage: "key")
         
-        indicator.center = self.view.center
-        self.view.addSubview(indicator)
-    
+        indicadorView = IndicatorUIView(frame: self.view.frame)
+        indicadorView.center = self.view.center
+        self.view.addSubview(indicadorView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,17 +40,16 @@ class LoginViewController: UIViewController {
             }else{
                 let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.FacebookMobile)\": { \"\(UdacityClient.JSONBodyKeys.AccessToken)\": \"" + result! + "\"}}"
     
+                
                 let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
-                    (result, error) in
+                    (result, error, errorMessage) in
                     if let error = error {
                         let message = error.userInfo.description
                         DispatchQueue.main.async {
                             self.showAlertFaildLogin(message)
                         }
                     }else{
-                        DispatchQueue.main.async {
-                            self.completeLogin()
-                        }
+                        self.completeLogin()
                     }
                 }
             }
@@ -119,16 +118,33 @@ class LoginViewController: UIViewController {
     // MARK: Login
     
     private func completeLogin() {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "ManagerNavigationController") as! UINavigationController
-        present(controller, animated: true, completion: nil)
+        ParseClient.sharedInstance().getStudentsLocation { (result, error, errorMessage) in
+            if let _ = error{
+                DispatchQueue.main.async {
+                    //self.indicator.loadingView(false)
+                    self.indicadorView.loadingView(false)
+                    self.showAlertFaildLogin(errorMessage!)
+                }
+            }else{
+                self.appDelegate.students = result!
+                DispatchQueue.main.async {
+                    //self.indicator.loadingView(false)
+                    self.indicadorView.loadingView(false)
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "ManagerNavigationController") as! UINavigationController
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+        }
     }
 
     
     @IBAction func loginPressed(_ sender: Any) {
-        indicator.loadingView(true)
+       
+        indicadorView.loadingView(true)
         
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            indicator.loadingView(false)
+            //indicator.loadingView(false)
+            indicadorView.loadingView(false)
             showAlertFaildLogin("Username or Password Empty.")
 
         } else {
@@ -136,24 +152,13 @@ class LoginViewController: UIViewController {
             UdacityClient.sharedInstance().loginWithUdacity(emailTextField.text!, password: passwordTextField.text!, completionHandlerForLogin: { (error, errorMessage) in
                 if let errorMessage = errorMessage {
                     DispatchQueue.main.async {
-                        self.indicator.loadingView(false)
+                        //self.indicator.loadingView(false)
+                        self.indicadorView.loadingView(false)
                         self.showAlertFaildLogin(errorMessage)
                     }
                 }else{
-                    
-                    ParseClient.sharedInstance().getStudentsLocation { (result, error, errorMessage) in
-                        if let _ = error{
-                            DispatchQueue.main.async {
-                                self.indicator.loadingView(false)
-                                self.showAlertFaildLogin(errorMessage!)
-                            }
-                        }else{
-                            DispatchQueue.main.async {
-                                self.indicator.loadingView(false)
-                                self.completeLogin()
-                            }
-                        }
-                    }
+                   self.completeLogin()
+                   self.indicadorView.loadingView(false)
                 }
             })
         }
@@ -170,14 +175,41 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginFacebookPressed(_ sender: Any) {
+        indicadorView.loadingView(true)
         FacebookClient.sharedInstance().loginButtonPressed(self) { (result, error) in
+            if let error = error{
+                self.indicadorView.loadingView(false)
+                print(error)
+            }else{
+                
+                //print("result: \(result)")
+                //self.completeLogin()
+                self.indicadorView.loadingView(false)
+                self.loginFacebookWithUdacity()
+            }
+        }
+    }
+    
+    func loginFacebookWithUdacity(){
+        FacebookClient.sharedInstance().loginStart { (result, error) in
             if let error = error{
                 print(error)
             }else{
-                print("good")
-                print("\(result)")
+                let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.FacebookMobile)\": { \"\(UdacityClient.JSONBodyKeys.AccessToken)\": \"" + result! + "\"}}"
+                
+                
+                let _ = UdacityClient.sharedInstance().taskForPOSTMethod(UdacityClient.Constants.AuthorizationURL, jsonBody: jsonBody){
+                    (result, error, errorMessage) in
+                    if let error = error {
+                        let message = error.userInfo.description
+                        DispatchQueue.main.async {
+                            self.showAlertFaildLogin(message)
+                        }
+                    }else{
+                        self.completeLogin()
+                    }
+                }
             }
-
         }
     }
 }

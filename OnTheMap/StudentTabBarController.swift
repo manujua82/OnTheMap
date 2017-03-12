@@ -10,7 +10,8 @@ import UIKit
 
 class StudentTabBarController: UITabBarController {
 
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,25 +19,48 @@ class StudentTabBarController: UITabBarController {
     }
     
     @IBAction func refreshPressed(_ sender: Any) {
-        print("refreshPressed")
+        if self.selectedIndex == 0 {
+            let controller = self.selectedViewController as! StudentMapViewController
+            controller.refreshMap()
+        }else if self.selectedIndex == 1 {
+            let controller = self.selectedViewController as! StudentListTableViewController
+            controller.refreshTable()
+        }
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
-        print("logoutPressed")
+        FacebookClient.sharedInstance().logOutButtonPressed()
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func pinPressed(_ sender: Any) {
-        ParseClient.sharedInstance().getStudentLocation({ (_, error, _) in
+        ParseClient.sharedInstance().getStudentLocation(appDelegate.account.key!) { (result, _, error) in
             if let error = error {
                 DispatchQueue.main.async {
                     print("\(error)")
                     self.openInformationVIew(isOverWritten: false)
                 }
             }else{
-                //Alert about the overwrite
+                let message = "You have already posted a Student Location, Would you like overwrite your current location?"
+                let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.alert)
+                
+                let overwrite = UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.default, handler: { (UIAlertAction) in
+                    self.appDelegate.user = result!
+                    DispatchQueue.main.async {
+                        self.openInformationVIew(isOverWritten: true)
+                    }
+                })
+                
+                let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+                
+                alert.addAction(overwrite)
+                alert.addAction(cancel)
+                
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
-        })
+        }
     }
     
     func openInformationVIew(isOverWritten: Bool){
@@ -46,8 +70,13 @@ class StudentTabBarController: UITabBarController {
     }
     
     func refreshSelectedViewController() {
+       
         
-        /*if self.selectedViewController!.isKindOfClass(MapViewController) {
+        print("Index: /(self.selectedIndex)")
+        
+      /*
+        
+        if self.selectedViewController!.isKindOfClass(MapViewController) {
             let controller = self.selectedViewController as! MapViewController
             controller.refreshMap()
         } else if self.selectedViewController!.isKindOfClass(TableViewController){
@@ -55,6 +84,7 @@ class StudentTabBarController: UITabBarController {
             controller.refreshTable()
         } else {
             print("trying to refresh an unknown view")
-        }*/
+        }
+        */
     }
 }

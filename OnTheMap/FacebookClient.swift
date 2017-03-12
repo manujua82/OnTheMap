@@ -16,11 +16,6 @@ class FacebookClient: NSObject {
     
     func loginStart(completionHandlerForLogin: @escaping (_ authenticationToken:String?, _ error: Error?) -> Void){
         if let accessToken = FBSDKAccessToken.current(){
-      
-            print("AutentificationToke: \(accessToken.tokenString)")
-            
-       
-            
             completionHandlerForLogin(accessToken.tokenString, nil)
         }else{
             let userInfo = [NSLocalizedDescriptionKey : "User not login: "]
@@ -41,9 +36,12 @@ class FacebookClient: NSObject {
             case .success(_, _, _):
                 self.fecthProfile(completionHandlerForConvertData: completionHandlerForLogin)
             }
-        }
-        
-        
+        } 
+    }
+    
+    func logOutButtonPressed(){
+        let loginmanager = LoginManager()
+        loginmanager.logOut()
     }
     
     func fecthProfile(completionHandlerForConvertData: @escaping (_ result:[String:Any]?, _ error: Error?) -> Void){

@@ -14,9 +14,7 @@ class ParseClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+
     // MARK: GET
     func taskForGETMethod(parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void) -> URLSessionDataTask {
         
@@ -68,9 +66,9 @@ class ParseClient: NSObject {
     
     
     // MARK: POST, PUT
-    func taskForPOSTPUTMethod(_ method: String,jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTPUTMethod(_ url: URL, _ method: String,jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: URL(string: Constants.StudentLocationURL)!)
+        let request = NSMutableURLRequest(url: url)
         request.httpMethod = method
         request.addValue(ParseClient.Constants.ApplicationID, forHTTPHeaderField: ParseClient.ParameterKeys.ApplicationID)
         request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: ParseClient.ParameterKeys.APIKey)
@@ -92,7 +90,7 @@ class ParseClient: NSObject {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!", UdacityClient.ErrorMessage.InvalidEmail)
+                sendError("Your request returned a status code other than 2xx!", UdacityClient.ErrorMessage.SchemaMismatch)
                 return
             }
             
@@ -103,11 +101,11 @@ class ParseClient: NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            let range = Range(uncheckedBounds: (5, data.count))
-            let newData = data.subdata(in: range) /* subset response data! */
+            //let range = Range(uncheckedBounds: (5, data.count))
+            //let newData = data.subdata(in: range) /* subset response data! */
             
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+            print(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         task.resume()
         return task

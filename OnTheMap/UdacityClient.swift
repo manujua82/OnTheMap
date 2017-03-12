@@ -224,7 +224,6 @@ class UdacityClient: NSObject {
         
         var mutableMethod: String = Constants.GetUserURL
         mutableMethod = substituteKeyInMethod(mutableMethod, key: URLKeys.UserID, value: key)!
-        print("mutaableMethod: \(mutableMethod)")
         let _ = taskForGETMethod(mutableMethod) { (result, error, errorMessage) in
             if let errorMessage = errorMessage {
                 completionHandlerForGetUserData(error, errorMessage)

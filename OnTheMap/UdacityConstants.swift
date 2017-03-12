@@ -42,6 +42,9 @@ extension UdacityClient{
         static let MissingLink = "Need To Enter Link!"
         static let CantLogin = "Network Connection Is Offline!"
         static let InvalidEmail = "Invalid Email Or Password!"
+        static let SchemaMismatch = "Schema mismatch for StudentLocation"
+        static let TitleInformation = "Information Posting Faild"
+        static let NoMatches = "No matches found"
         
     }
     
@@ -50,6 +53,8 @@ extension UdacityClient{
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         hostViewController.present(alert, animated: true, completion: nil)
     }
+    
+    
 
 
 

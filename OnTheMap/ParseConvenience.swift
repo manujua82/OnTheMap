@@ -12,10 +12,10 @@ import UIKit
 extension ParseClient {
 
     
-    func getStudentsLocation(_ completionHandlerForGetStudents: @escaping (_ result: Bool, _ error: NSError?, _ errorMessage: String?) -> Void) {
+    func getStudentsLocation(_ completionHandlerForGetStudents: @escaping (_ result: [StudentLocation]?, _ error: NSError?, _ errorMessage: String?) -> Void) {
         
         let parameters = [ParseClient.ParameterKeys.Limit: "100",
-                          ParseClient.ParameterKeys.Order: "updatedAt"
+                          ParseClient.ParameterKeys.Order: "-updatedAt"
                           ]
         
         /* 2. Make the request */
@@ -24,66 +24,79 @@ extension ParseClient {
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
-                completionHandlerForGetStudents(false, error, errorMessage)
+                completionHandlerForGetStudents(nil, error, errorMessage)
             } else {
                 if let results = results?[ParseClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
                     let students = StudentLocation.moviesFromResults(results)
-                    self.appDelegate.students = students
-                    completionHandlerForGetStudents(true, nil, nil)
+                    completionHandlerForGetStudents(students, nil, nil)
                 } else {
-                    completionHandlerForGetStudents(false, NSError(domain: "get students parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]),  "Could not parse getStudentLocation")
+                    completionHandlerForGetStudents(nil, NSError(domain: "get students parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]),  "Could not parse getStudentLocation")
                 }
             }
         }
     }
     
-    func getStudentLocation(_ completionHandlerForGetStudent: @escaping (_ result: Bool, _ error: NSError?, _ errorMessage: String?) -> Void) {
+    func getStudentLocation(_ uniqueKey: String, _ completionHandlerForGetStudent: @escaping (_ result: StudentLocation?, _ error: NSError?, _ errorMessage: String?) -> Void) {
         
+        let parameterValue = "{ \"uniqueKey\": \"\(uniqueKey)\"}"
+        let parameters = [ParseClient.ParameterKeys.Where: parameterValue]
         
-        if let uniqueKey = appDelegate.account.key {
-            let parameterValue = "{ \"uniqueKey\": \"\(uniqueKey)\"}"
-            let parameters = [ParseClient.ParameterKeys.Where: parameterValue]
-        
-            /* 2. Make the request */
-            let _ = taskForGETMethod(parameters: parameters as [String : AnyObject]) { (results, error, errorMessage) in
+        /* 2. Make the request */
+        let _ = taskForGETMethod(parameters: parameters as [String : AnyObject]) { (results, error, errorMessage) in
             
-                /* 3. Send the desired value(s) to completion handler */
-                if let error = error {
-                    print(error)
-                    completionHandlerForGetStudent(false, error, errorMessage)
-                } else {
-                    if let results = results?[ParseClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
-                        if results.count > 0 {
-                            let user = StudentLocation(dictionary: results[0])
-                            self.appDelegate.user = user
-                            completionHandlerForGetStudent(true, nil, nil)
-                        }
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                print(error)
+                completionHandlerForGetStudent(nil, error, errorMessage)
+            } else {
+                if let results = results?[ParseClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
+                    if results.count > 0 {
+                        let user = StudentLocation(dictionary: results[0])
+                        completionHandlerForGetStudent(user, nil, nil)
+                        return
                     }
-                    
-                    completionHandlerForGetStudent(false, NSError(domain: "get students parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]),"Could not parse getStudentLocation")
-                    
                 }
+                completionHandlerForGetStudent(nil, NSError(domain: "get students parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocation"]),"Could not parse getStudentLocation")
             }
         }
     }
     
-    func createStudentLocation(_ completionHandlerForCreateStudent: @escaping (_ result: Bool, _ error: NSError?, _ errorMessage: String?) -> Void) {
+    func createStudentLocation(user: StudentLocation,isOverWritten: Bool ,completionHandlerForCreateStudentLocation:  @escaping (_ result: AnyObject?, _ error: NSError?, _ errorMessage: String?) -> Void){
         
+        var jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"" + user.uniqueKey! + "\", "
+        jsonBody += "\"\(ParseClient.JSONBodyKeys.FirstName)\": \"" + user.firstName! + "\", "
+        jsonBody += "\"\(ParseClient.JSONBodyKeys.LastName)\": \"" + user.lastName! + "\", "
+        jsonBody += "\"\(ParseClient.JSONBodyKeys.MapString)\": \"" + user.mapString! + "\", "
+        jsonBody += "\"\(ParseClient.JSONBodyKeys.MediaURL)\": \"" + user.mediaURL! + "\", "
+        jsonBody += "\"\(ParseClient.JSONBodyKeys.Latitude)\": \(user.latitude!), "
+        jsonBody += "\"\(ParseClient.JSONBodyKeys.Longitude)\": \(user.longitude!) }"
         
+        let method: String
+        var urlString: String
+        if !isOverWritten {
+            method = "POST"
+            urlString = ParseClient.Constants.StudentLocationURL
+        }else{
+            method = "PUT"
+            urlString = ParseClient.Constants.StudentLocationUpdateURL
+            urlString = substituteKeyInMethod(urlString, key: URLKeys.UserID, value: user.objectId!)!
+        }
         
-        /*
-         
-        "{\"uniqueKey\": \"1234\",
-           \"firstName\": \"John\",
-           \"lastName\": \"Doe\",
-            \"mapString\": \"Mountain View, CA\",
-          \"mediaURL\": \"https://udacity.com\",
-          \"latitude\": 37.386052,
-           \"longitude\": -122.083851}"
-         */
-
-    
+        let url = URL(string: urlString)!
+        let _ = taskForPOSTPUTMethod(url, method, jsonBody: jsonBody) { (result, error, erroMessage) in
+            if let erroMessage = erroMessage {
+                completionHandlerForCreateStudentLocation(nil, error, erroMessage)
+            }else{
+                completionHandlerForCreateStudentLocation(result,nil,nil)
+            }
+        }
     }
     
-    
+    func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
+        if method.range(of: "{\(key)}") != nil {
+            return method.replacingOccurrences(of: "{\(key)}", with: value)
+        } else {
+            return nil
+        }
+    }
 }

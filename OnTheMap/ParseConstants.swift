@@ -16,6 +16,7 @@ extension ParseClient{
         static let APIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
         static let StudentLocationURL = "https://parse.udacity.com/parse/classes/StudentLocation"
+        static let StudentLocationUpdateURL = "https://parse.udacity.com/parse/classes/StudentLocation/{id}"
     }
     
     // MARK: Parameter Keys
@@ -30,6 +31,19 @@ extension ParseClient{
         static let Where = "where"
         
     }
+    
+    // MARK: JSON Body Keys
+    struct JSONBodyKeys {
+        static let UniqueKey = "uniqueKey"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let MapString = "mapString"
+        static let MediaURL = "mediaURL"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let Watchlist = "watchlist"
+    }
+    
     
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
@@ -47,7 +61,11 @@ extension ParseClient{
         static let UpdatedAt = "updatedAt"
         
         static let StudentResults = "results"
-        
+    }
+    
+    // MARK: URL Keys
+    struct URLKeys {
+        static let UserID = "id"
     }
     
 

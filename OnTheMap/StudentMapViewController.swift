@@ -16,11 +16,27 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    var indicadorView: IndicatorUIView = IndicatorUIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         mapView.delegate = self
+        indicadorView = IndicatorUIView(frame: self.view.frame)
+        indicadorView.center = self.view.center
+        self.view.addSubview(indicadorView)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadMap()
+    }
+    
+    func loadMap(){
         self.students = self.appDelegate.students
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        
         if self.students.count > 0 {
             var annotations = [MKPointAnnotation]()
             for student in students {
@@ -44,11 +60,13 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
                 
                 // Finally we place the annotation in an array of annotations.
                 annotations.append(annotation)
-
+                
                 self.mapView.addAnnotations(annotations)
             }
         }
     }
+    
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
@@ -74,6 +92,25 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
                 let trimmedString = toOpen.trimmingCharacters(in: .whitespaces)
                 if trimmedString != "" {
                     app.open(URL(string: trimmedString)!, options: [:], completionHandler: nil)
+                }
+            }
+        }
+    }
+    
+    func refreshMap(){
+        indicadorView.loadingView(true)
+        ParseClient.sharedInstance().getStudentsLocation { (result, error, errorMessage) in
+            if let _ = error{
+                DispatchQueue.main.async {
+                    self.indicadorView.loadingView(false)
+                    UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage!)
+                }
+            }else{
+                self.appDelegate.students = result!
+                DispatchQueue.main.async {
+                    self.loadMap()
+                    self.indicadorView.loadingView(false)
+                    
                 }
             }
         }

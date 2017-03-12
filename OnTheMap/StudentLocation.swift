@@ -10,21 +10,34 @@ import Foundation
 
 
 struct StudentLocation {
-    let objectId: String
-    let uniqueKey: String?
-    let firstName: String?
-    let lastName: String?
-    let mapString: String?
-    let mediaURL: String?
-    let latitude: Double?
-    let longitude: Double?
-    let createdAt: String?
-    let updatedAt: String?
+    var objectId: String?
+    var uniqueKey: String?
+    var firstName: String?
+    var lastName: String?
+    var mapString: String?
+    var mediaURL: String?
+    var latitude: Double?
+    var longitude: Double?
+    var createdAt: String?
+    var updatedAt: String?
     
+    init() {
+        self.objectId = ""
+        self.uniqueKey = ""
+        self.firstName = ""
+        self.lastName = ""
+        self.mapString = ""
+        self.mediaURL = ""
+        self.latitude = 0.0
+        self.longitude = 0.0
+        self.createdAt = ""
+        self.updatedAt = ""
+    }
+
     // construct a StudentLocation from a dictionary
     init(dictionary: [String:AnyObject]) {
         
-        objectId = dictionary[ParseClient.JSONResponseKeys.ObjectId] as! String
+        self.objectId = dictionary[ParseClient.JSONResponseKeys.ObjectId] as? String
         
         if let uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String{
             self.uniqueKey = uniqueKey
@@ -81,9 +94,6 @@ struct StudentLocation {
         }
     }
     
-    
-    
-    
     static func moviesFromResults(_ results: [[String:AnyObject]]) -> [StudentLocation] {
         
         var students = [StudentLocation]()
@@ -94,7 +104,6 @@ struct StudentLocation {
         }
         
         return students
-        
     }
     
 }

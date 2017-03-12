@@ -29,11 +29,17 @@ class InformationPostingViewController: UIViewController {
     var isOverWritten: Bool = false
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    var indicadorView: IndicatorUIView = IndicatorUIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureTextField(geocodeTextField)
         configureTextField(linkTextField)
+        
+        indicadorView = IndicatorUIView(frame: self.view.frame)
+        indicadorView.center = self.view.center
+        self.view.addSubview(indicadorView)
         
         showLinkPosting(true)
     }
@@ -68,40 +74,53 @@ class InformationPostingViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
-    
     @IBAction func submitPressed(_ sender: Any) {
         
         if let mediaUrl = linkTextField.text {
             if verifyUrl(urlString: mediaUrl) {
                 
-                if !isOverWritten{
-                    print("uniqueKey: \(appDelegate.account.key)")
-                    print("firstName: \(appDelegate.account.firstName)")
-                    print("lastName: \(appDelegate.account.lastName)")
-                    print("mapString: " + self.mapString!)
+                indicadorView.loadingView(true)
+                
+                var user: StudentLocation = StudentLocation()
+                user.objectId = appDelegate.user?.objectId
+                user.uniqueKey =  appDelegate.account.key!
+                user.firstName = appDelegate.account.firstName!
+                user.lastName = appDelegate.account.lastName!
+                user.mapString = self.mapString!
+                user.mediaURL = self.linkTextField.text!
+                user.latitude =  self.latitude!
+                user.longitude = self.longitude!
+                
+                
+                ParseClient.sharedInstance().createStudentLocation(user: user, isOverWritten: isOverWritten, completionHandlerForCreateStudentLocation: { (_, _, errorMessage) in
                     
-                    
-                    //print("mapString: \()")
-                    
-                    /*
-                     "{\"uniqueKey\": \"1234\",
-                     \"firstName\": \"John\",
-                     \"lastName\": \"Doe\",
-                     \"mapString\": \"Mountain View, CA\",
-                     \"mediaURL\": \"https://udacity.com\",
-                     \"latitude\": 37.386052,
-                     \"longitude\": -122.083851}"
-                     */
-                    
-                    
-                }
-
+                    if let errorMessage = errorMessage{
+                        DispatchQueue.main.async {
+                            self.indicadorView.loadingView(false)
+                            UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage)
+                        }
+                    }else{
+                        ParseClient.sharedInstance().getStudentsLocation { (result, error, errorMessage) in
+                            if let _ = error{
+                                DispatchQueue.main.async {
+                                    self.indicadorView.loadingView(false)
+                                    UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage!)
+                                }
+                            }else{
+                                self.appDelegate.students = result!
+                                DispatchQueue.main.async {
+                                    self.indicadorView.loadingView(false)
+                                    self.dismiss(animated: true, completion: nil)
+                                }
+                            }
+                        }
+                    }
+                })
             }else{
-                UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", "Link is not valid")
+                UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, UdacityClient.ErrorMessage.InvalidLink)
             }
         }else{
-            UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", "Link is empty")
+            UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, UdacityClient.ErrorMessage.InvalidLink)
         }
     }
     
@@ -116,9 +135,9 @@ class InformationPostingViewController: UIViewController {
             
             if error != nil {
                 let message = "Error occured in search location: \(error!.localizedDescription)"
-                UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", message)
+                UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, message)
             } else if response!.mapItems.count == 0 {
-                UdacityClient.sharedInstance().showAlert(self, "Information Posting Faild", "No matches found")
+                UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, UdacityClient.ErrorMessage.NoMatches)
             } else {
                 
                 DispatchQueue.main.async {
@@ -149,7 +168,6 @@ class InformationPostingViewController: UIViewController {
             }
         })
     }
-    
     
     func verifyUrl (urlString: String?) -> Bool {
         //Check for nil
