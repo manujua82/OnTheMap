@@ -2,7 +2,7 @@
 //  IndicatorUIView.swift
 //  OnTheMap
 //
-//  Created by Kevin Bilberry on 3/11/17.
+//  Created by Juan Salcedo on 3/11/17.
 //  Copyright © 2017 Juan Salcedo. All rights reserved.
 //
 

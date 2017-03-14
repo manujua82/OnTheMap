@@ -10,7 +10,6 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    var client = UdacityClient()
     var indicadorView: IndicatorUIView = IndicatorUIView()
     let studentInformation = StudentInformation.shared()
     
