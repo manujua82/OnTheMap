@@ -27,7 +27,7 @@ class InformationPostingViewController: UIViewController {
     var mapString: String?
     
     var isOverWritten: Bool = false
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let studentInformation = StudentInformation.shared()
     
     var indicadorView: IndicatorUIView = IndicatorUIView()
     
@@ -82,10 +82,10 @@ class InformationPostingViewController: UIViewController {
                 indicadorView.loadingView(true)
                 
                 var user: StudentLocation = StudentLocation()
-                user.objectId = appDelegate.user?.objectId
-                user.uniqueKey =  appDelegate.account.key!
-                user.firstName = appDelegate.account.firstName!
-                user.lastName = appDelegate.account.lastName!
+                user.objectId = self.studentInformation.user?.objectId
+                user.uniqueKey =  self.studentInformation.account.key!
+                user.firstName = self.studentInformation.account.firstName!
+                user.lastName = self.studentInformation.account.lastName!
                 user.mapString = self.mapString!
                 user.mediaURL = self.linkTextField.text!
                 user.latitude =  self.latitude!
@@ -107,7 +107,7 @@ class InformationPostingViewController: UIViewController {
                                     UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage!)
                                 }
                             }else{
-                                self.appDelegate.students = result!
+                                self.studentInformation.students = result!
                                 DispatchQueue.main.async {
                                     self.indicadorView.loadingView(false)
                                     self.dismiss(animated: true, completion: nil)
@@ -126,6 +126,7 @@ class InformationPostingViewController: UIViewController {
     
     
     func performSearch() {
+        indicadorView.loadingView(true)
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = geocodeTextField.text
         request.region = mapView.region
@@ -134,9 +135,11 @@ class InformationPostingViewController: UIViewController {
         search.start(completionHandler: {(response, error) in
             
             if error != nil {
+                self.indicadorView.loadingView(false)
                 let message = "Error occured in search location: \(error!.localizedDescription)"
                 UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, message)
             } else if response!.mapItems.count == 0 {
+                self.indicadorView.loadingView(false)
                 UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, UdacityClient.ErrorMessage.NoMatches)
             } else {
                 
@@ -144,6 +147,8 @@ class InformationPostingViewController: UIViewController {
                     self.cancelButton.titleLabel?.textColor = UIColor.white
                     self.showInformationPostin(true)
                     self.showLinkPosting(false)
+                    
+                    self.indicadorView.loadingView(false)
                 }
                 
                 let pointAnnotation = MKPointAnnotation()

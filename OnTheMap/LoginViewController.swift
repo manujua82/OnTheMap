@@ -12,8 +12,6 @@ class LoginViewController: UIViewController {
     
     var client = UdacityClient()
     var indicadorView: IndicatorUIView = IndicatorUIView()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     let studentInformation = StudentInformation.shared()
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -101,7 +99,6 @@ class LoginViewController: UIViewController {
                     UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, errorMessage!)
                 }
             }else{
-                self.appDelegate.students = result!
                 self.studentInformation.students = result!
                 DispatchQueue.main.async {
                     //self.indicator.loadingView(false)
@@ -135,10 +132,6 @@ class LoginViewController: UIViewController {
                 }else{
                    self.studentInformation.account = account!
                    self.studentInformation.session = session!
-                   
-                   self.appDelegate.account = account!
-                   self.appDelegate.session = session!
-                    
                    self.completeLogin()
                    
                 }
@@ -148,16 +141,14 @@ class LoginViewController: UIViewController {
     
     @IBAction func singUpPressed(_ sender: Any) {
         UdacityClient.sharedInstance().udacitySingUpURL(self){ (success, error) in
-            if success{
-               // print("good")
-            }else{
-               // print("error")
+            if let error = error{
+                UdacityClient.sharedInstance().showAlert(self, "Sing Up", error)
             }
         }
     }
 
     @IBAction func loginFacebookPressed(_ sender: Any) {
-        indicadorView.loadingView(true)
+        
         
         FacebookClient.sharedInstance().loginButtonPressed(self) { (result, error) in
             if let error = error{
@@ -170,6 +161,9 @@ class LoginViewController: UIViewController {
     }
     
     func loginFacebookWithUdacity(){
+        DispatchQueue.main.async {
+            self.indicadorView.loadingView(true)
+        }
         FacebookClient.sharedInstance().loginStart { (result, error) in
             if let error = error{
                 self.indicadorView.loadingView(false)
@@ -186,9 +180,6 @@ class LoginViewController: UIViewController {
                     }else{
                         self.studentInformation.account = account!
                         self.studentInformation.session = session!
-                        
-                        self.appDelegate.account = account!
-                        self.appDelegate.session = session!
                         self.completeLogin()
                     }
                 })

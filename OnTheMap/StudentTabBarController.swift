@@ -10,8 +10,8 @@ import UIKit
 
 class StudentTabBarController: UITabBarController {
 
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+    let studentInformation = StudentInformation.shared()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,7 +34,7 @@ class StudentTabBarController: UITabBarController {
     }
     
     @IBAction func pinPressed(_ sender: Any) {
-        ParseClient.sharedInstance().getStudentLocation(appDelegate.account.key!) { (result, _, error) in
+        ParseClient.sharedInstance().getStudentLocation(self.studentInformation.account.key!) { (result, _, error) in
             if let error = error {
                 DispatchQueue.main.async {
                     print("\(error)")
@@ -45,7 +45,7 @@ class StudentTabBarController: UITabBarController {
                 let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.alert)
                 
                 let overwrite = UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.default, handler: { (UIAlertAction) in
-                    self.appDelegate.user = result!
+                    self.studentInformation.user = result!
                     DispatchQueue.main.async {
                         self.openInformationVIew(isOverWritten: true)
                     }
@@ -69,22 +69,4 @@ class StudentTabBarController: UITabBarController {
         present(controller, animated: true, completion: nil)
     }
     
-    func refreshSelectedViewController() {
-       
-        
-        print("Index: /(self.selectedIndex)")
-        
-      /*
-        
-        if self.selectedViewController!.isKindOfClass(MapViewController) {
-            let controller = self.selectedViewController as! MapViewController
-            controller.refreshMap()
-        } else if self.selectedViewController!.isKindOfClass(TableViewController){
-            let controller = self.selectedViewController as! TableViewController
-            controller.refreshTable()
-        } else {
-            print("trying to refresh an unknown view")
-        }
-        */
-    }
 }

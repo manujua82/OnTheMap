@@ -11,8 +11,7 @@ import MapKit
 
 class StudentMapViewController: UIViewController, MKMapViewDelegate {
     
-    var students: [StudentLocation] = []
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let studentInformation = StudentInformation.shared()
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -34,12 +33,12 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func loadMap(){
-        self.students = self.appDelegate.students
+       // self.students = self.appDelegate.students
         self.mapView.removeAnnotations(self.mapView.annotations)
         
-        if self.students.count > 0 {
+        if self.studentInformation.students.count > 0 {
             var annotations = [MKPointAnnotation]()
-            for student in students {
+            for student in self.studentInformation.students {
                 // Notice that the float values are being used to create CLLocationDegree values.
                 // This is a version of the Double type.
                 let lat = CLLocationDegrees(student.latitude!)
@@ -106,7 +105,7 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
                     UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage!)
                 }
             }else{
-                self.appDelegate.students = result!
+                self.studentInformation.students = result!
                 DispatchQueue.main.async {
                     self.loadMap()
                     self.indicadorView.loadingView(false)

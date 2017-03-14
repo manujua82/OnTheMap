@@ -10,8 +10,6 @@ import UIKit
 
 class StudentListTableViewController: UITableViewController {
     
-    var students: [StudentLocation] = []
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let studentInformation = StudentInformation.shared()
     
     @IBOutlet var studentTableView: UITableView!
@@ -67,11 +65,6 @@ class StudentListTableViewController: UITableViewController {
     }
     
     func loadTable(){
-        //self.students = self.appDelegate.students
-        //if self.students.count > 0 {
-        //    self.studentTableView.reloadData()
-        //}
-        
         if self.studentInformation.students.count > 0{
             self.studentTableView.reloadData()
         }
@@ -86,7 +79,6 @@ class StudentListTableViewController: UITableViewController {
                     UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage!)
                 }
             }else{
-                //self.appDelegate.students = result!
                 self.studentInformation.students = result!
                 DispatchQueue.main.async {
                     self.loadTable()
