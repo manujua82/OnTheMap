@@ -12,6 +12,7 @@ class StudentListTableViewController: UITableViewController {
     
     var students: [StudentLocation] = []
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let studentInformation = StudentInformation.shared()
     
     @IBOutlet var studentTableView: UITableView!
     
@@ -31,13 +32,15 @@ class StudentListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        //return students.count
+        return self.studentInformation.students.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell")!
-        let studentForRow = self.students[(indexPath as NSIndexPath).row]
+        //let studentForRow = self.students[(indexPath as NSIndexPath).row]
+        let studentForRow = self.studentInformation.students[(indexPath as NSIndexPath).row]
         
         cell.imageView?.image = UIImage(named: "pin")
         cell.textLabel?.text = studentForRow.firstName! + " " + studentForRow.lastName!
@@ -47,7 +50,7 @@ class StudentListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let StudentForRow = self.students[(indexPath as NSIndexPath).row]
+        let StudentForRow = self.studentInformation.students[(indexPath as NSIndexPath).row]
         var urlString = StudentForRow.mediaURL!
         urlString = urlString.trimmingCharacters(in: .whitespaces)
         if let url = URL(string: urlString){
@@ -64,8 +67,12 @@ class StudentListTableViewController: UITableViewController {
     }
     
     func loadTable(){
-        self.students = self.appDelegate.students
-        if self.students.count > 0 {
+        //self.students = self.appDelegate.students
+        //if self.students.count > 0 {
+        //    self.studentTableView.reloadData()
+        //}
+        
+        if self.studentInformation.students.count > 0{
             self.studentTableView.reloadData()
         }
     }
@@ -79,7 +86,8 @@ class StudentListTableViewController: UITableViewController {
                     UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.TitleInformation, errorMessage!)
                 }
             }else{
-                self.appDelegate.students = result!
+                //self.appDelegate.students = result!
+                self.studentInformation.students = result!
                 DispatchQueue.main.async {
                     self.loadTable()
                     self.indicadorView.loadingView(false)

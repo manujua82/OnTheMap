@@ -30,6 +30,7 @@
 		95C202251E5C84680047402D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C202231E5C84680047402D /* LaunchScreen.storyboard */; };
 		95D4AF721E68FCF800175C06 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4AF711E68FCF800175C06 /* IndicatorView.swift */; };
 		95D4AF741E69020700175C06 /* UdacityUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4AF731E69020700175C06 /* UdacityUser.swift */; };
+		95F252CF1E777100007C0A54 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F252CE1E777100007C0A54 /* StudentInformation.swift */; };
 		BCB876B3A4EF010B656BE090 /* Pods_OnTheMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1094265345F278E4D3FE99CE /* Pods_OnTheMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		95C202261E5C84680047402D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95D4AF711E68FCF800175C06 /* IndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		95D4AF731E69020700175C06 /* UdacityUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityUser.swift; sourceTree = "<group>"; };
+		95F252CE1E777100007C0A54 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		FF947398A0B5DE6A99C6237A /* Pods-OnTheMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnTheMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-OnTheMap/Pods-OnTheMap.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				955F52D51E5F33F600847B57 /* Clients */,
+				95F252CE1E777100007C0A54 /* StudentInformation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				9590A5B41E660DE40020AA82 /* FacebookClient.swift in Sources */,
 				9590A5BF1E66482A0020AA82 /* ParseConstants.swift in Sources */,
 				9538C65B1E74872A009C9390 /* IndicatorUIView.swift in Sources */,
+				95F252CF1E777100007C0A54 /* StudentInformation.swift in Sources */,
 				9511A2A11E5F794400581CB3 /* UdacityConstants.swift in Sources */,
 				95D4AF741E69020700175C06 /* UdacityUser.swift in Sources */,
 				95C2021D1E5C84680047402D /* LoginViewController.swift in Sources */,

@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     var indicadorView: IndicatorUIView = IndicatorUIView()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    let studentInformation = StudentInformation.shared()
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -100,6 +102,7 @@ class LoginViewController: UIViewController {
                 }
             }else{
                 self.appDelegate.students = result!
+                self.studentInformation.students = result!
                 DispatchQueue.main.async {
                     //self.indicator.loadingView(false)
                     self.indicadorView.loadingView(false)
@@ -130,8 +133,12 @@ class LoginViewController: UIViewController {
                         UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, errorMessage)
                     }
                 }else{
+                   self.studentInformation.account = account!
+                   self.studentInformation.session = session!
+                   
                    self.appDelegate.account = account!
                    self.appDelegate.session = session!
+                    
                    self.completeLogin()
                    
                 }
@@ -142,9 +149,9 @@ class LoginViewController: UIViewController {
     @IBAction func singUpPressed(_ sender: Any) {
         UdacityClient.sharedInstance().udacitySingUpURL(self){ (success, error) in
             if success{
-                print("good")
+               // print("good")
             }else{
-                print("error")
+               // print("error")
             }
         }
     }
@@ -177,6 +184,9 @@ class LoginViewController: UIViewController {
                             UdacityClient.sharedInstance().showAlert(self, UdacityClient.ErrorMessage.LogigFaild, errorMessage)
                         }
                     }else{
+                        self.studentInformation.account = account!
+                        self.studentInformation.session = session!
+                        
                         self.appDelegate.account = account!
                         self.appDelegate.session = session!
                         self.completeLogin()
