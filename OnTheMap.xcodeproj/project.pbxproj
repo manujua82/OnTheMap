@@ -28,7 +28,6 @@
 		95C202201E5C84680047402D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C2021E1E5C84680047402D /* Main.storyboard */; };
 		95C202221E5C84680047402D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95C202211E5C84680047402D /* Assets.xcassets */; };
 		95C202251E5C84680047402D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C202231E5C84680047402D /* LaunchScreen.storyboard */; };
-		95D4AF721E68FCF800175C06 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4AF711E68FCF800175C06 /* IndicatorView.swift */; };
 		95D4AF741E69020700175C06 /* UdacityUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D4AF731E69020700175C06 /* UdacityUser.swift */; };
 		95F252CF1E777100007C0A54 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F252CE1E777100007C0A54 /* StudentInformation.swift */; };
 		BCB876B3A4EF010B656BE090 /* Pods_OnTheMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1094265345F278E4D3FE99CE /* Pods_OnTheMap.framework */; };
@@ -60,7 +59,6 @@
 		95C202211E5C84680047402D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95C202241E5C84680047402D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95C202261E5C84680047402D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		95D4AF711E68FCF800175C06 /* IndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		95D4AF731E69020700175C06 /* UdacityUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityUser.swift; sourceTree = "<group>"; };
 		95F252CE1E777100007C0A54 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		FF947398A0B5DE6A99C6237A /* Pods-OnTheMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnTheMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-OnTheMap/Pods-OnTheMap.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 				9590A5E21E671F730020AA82 /* StudentMapViewController.swift */,
 				95249F3F1E6866AF009CF4E4 /* StudentListTableViewController.swift */,
 				95249F431E689F66009CF4E4 /* StudentTabBarController.swift */,
-				95D4AF711E68FCF800175C06 /* IndicatorView.swift */,
 				950D95E71E6DBB6200DE8A67 /* InformationPostingViewController.swift */,
 				9538C65A1E74872A009C9390 /* IndicatorUIView.swift */,
 			);
@@ -366,7 +363,6 @@
 				95C2021B1E5C84680047402D /* AppDelegate.swift in Sources */,
 				950D95E81E6DBB6200DE8A67 /* InformationPostingViewController.swift in Sources */,
 				9590A5C11E6648890020AA82 /* ParseClient.swift in Sources */,
-				95D4AF721E68FCF800175C06 /* IndicatorView.swift in Sources */,
 				9590A5E31E671F730020AA82 /* StudentMapViewController.swift in Sources */,
 				95249F401E6866AF009CF4E4 /* StudentListTableViewController.swift in Sources */,
 				95249F441E689F66009CF4E4 /* StudentTabBarController.swift in Sources */,
