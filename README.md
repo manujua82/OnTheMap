@@ -6,7 +6,7 @@ Swift, UIKit, NSURLSessionsJSON, ParsingMKMapViews.
 
 ## Install
 ```
-git clone git@github.com:manujua82/MemeMe.git
+git clone git@github.com:manujua82/OnTheMap.git
 ```
 
 ## Usage 
@@ -14,7 +14,7 @@ The On The Map app allows users to share their location and a URL with their fel
 
 First, the user logs in to the app using their Udacity username and password. After login, the app downloads locations and links previously posted by other students. These links can point to any URL that a student chooses. We encourage students to share something about their work or interests.
 
-After viewing the information posted by other students, a user can post their own location and link. The locations are specified with a string and forward geocoded. They can be as specific as a full street address or as generic as “Costa Rica” or “Seattle, WA.”
+After viewing the information posted by other students, a user can post their own location and link. The locations are specified with a string and forward geocoded. They can be as specific as a full street address or as generic as “Venezuela” or “Miami, FL.”
 The app has three view controller scenes:
 
 - Login View: Allows the user to log in using their Udacity credentials, or (as an extra credit exercise) using their Facebook account.
